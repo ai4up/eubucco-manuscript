@@ -1,0 +1,508 @@
+\documentclass[fleqn,10pt]{wlscirep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lineno}
+\usepackage{graphicx}
+\linenumbers
+
+ \title{EUBUCCO: European building stock characteristics in a common and open database for 206 million individual buildings}
+
+\author[1,2$\dag$,*]{Nikola Milojevic-Dupont}
+\author[1,2,$\dag$*]{Felix Wagner}
+\author[1,2]{Jiawei Hu}
+\author[2,3]{Marius Zumwald}
+\author[1,2]{Florian Nachtigall}
+\author[4]{Filip Biljecki}
+\author[5]{Niko Heeren}
+\author[6]{Lynn H. Kaack}
+\author[7]{Peter-Paul Pichler}
+\author[1,2]{Felix Creutzig}
+
+
+\affil[1]{Mercator Research Institute of Global Commons and Climate Change, Berlin, 10829, Germany}
+\affil[2]{Technical University Berlin, Berlin, 10623, Germany}
+\affil[3]{ETH Zurich, Institute for Environmental Decisions, Switzerland}
+\affil[4]{National University of Singapore, Singapore, 119077, Singapore}
+\affil[5]{Norwegian University of Science and Technology (NTNU), Trondheim, 7491, Norway}
+\affil[6]{Hertie School, Data Science Lab, Berlin, 10117, Germany}
+\affil[7]{Potsdam Institute for Climate Impact Research (PIK), Potsdam, 14473, Germany}
+
+\affil[*]{corresponding authors: Nikola Milojevic-Dupont (milojevic@mcc-berlin.net), Felix Wagner (wagner@mcc-berlin.net)} 
+\affil[$\dag$]{these authors contributed equally to this work}
+
+
+\begin{abstract}
+Building stock management is becoming a global societal and political issue, inter alia because of growing sustainability concerns.
+Comprehensive and openly accessible building stock data can enable impactful research exploring the most effective policy options.
+In Europe, efforts from citizen and governments generated numerous relevant datasets but these are fragmented and heterogeneous, thus hindering their usability.
+Here, we present \textsc{eubucco} v0.1, a database of individual building footprints for $\sim$ 206 million buildings across the 27 European Union countries and Switzerland. Three main \textit{attributes} -- building type, height and construction year -- are included for respectively 45\%, 74\%, 24\% of the buildings.
+We identify, collect and harmonize 50 open government datasets and OpenStreetMap, and perform extensive validation analyses to assess the quality, consistency and completeness of the data in every country.
+\textsc{eubucco} v0.1 provides the basis for high-resolution urban sustainability studies across scales -- continental, comparative or local studies --  using a centralized source and is relevant for a variety of use cases, e.g. for energy system analysis or natural hazard risk assessments.
+\end{abstract}
+\begin{document}
+
+\flushbottom
+\maketitle
+
+\thispagestyle{empty}
+
+\section*{Background \& Summary}
+
+Built infrastructure fulfills the basic need for shelter and mediates access to fundamental infrastructural services for the population \cite{weiszIndustrialEcologyRole2015}. The economic value of global real estate in 2020 was estimated to \$327 trillion, nearly four times the global gross domestic product\cite{savills21}. Built infrastructure accounts for the majority of societies' physical material stock: in particular, building construction and maintenance is responsible for half of global resource consumption\cite{krausmannGlobalSocioeconomicMaterial2017}. Buildings also account for a substantial share of the global final energy consumption and greenhouse gas emissions, respectively 31\% and 21\% in 2019\cite{ar6wgiii2022}. The way we build significantly affects material and energy consumption and associated greenhouse gas emissions and other impacts\cite{ar6wgiii2022}. High-resolution building stock data can support economic and social policy at the regional level, especially to achieve the Sustainable Development Goals \cite{SDSN2015,zhu2019understanding}.
+
+The highest resolution building stock data that is typically used is geospatial vector data.
+At a minimum, they contain georeferenced two-dimensional (2D) \textit{footprints} of individual buildings and can reach a realistic 3D representation of walls, roof and further details \cite{biljecki2021open}. Geospatial vector building \textit{geometries} are enriched with building string or numerical \textit{attributes} that include the building \textit{height} (also known as 2.5D representation), \textit{construction year}, and usage \textit{type}. Other potential \textit{attributes} can be information about retrofitting, roof type, energy standards, building materials, etc.
+In contrast to aggregate data, such high-resolution building stock data allow to consider buildings individually and collectively for planning policy interventions.
+By correlating building \textit{attributes} with one another and allowing to take spatial context into account, these data allow for more targeted analyses and maps relating building \textit{attributes} with demographic information, helping design targeted policy interventions, and modeling their impacts down to the building level.
+
+In regional planning, high-resolution building stock data enables to investigate different important questions. They are necessary to assess future demand for new construction, as well as possible needs for deconstruction in areas with shrinking populations \cite{bai2018six,creutzig2016urban,thacker2019infrastructure}. Building stock composition and dynamics can also serve as a basis for predicting material outflow either as waste or as raw material for new building construction\cite{heeren2019tracking,heeren2019database,lanauTakingStockBuilt2019,kohlerResearchBuildingStock2009}. In turn, in energy and climate policy, spatially resolved data on the extent and condition of the building stock is essential for modeling energy demand scenarios and climate change policies aimed at reducing energy-related greenhouse gas emissions \cite{buffat2017big,wang2022data,milojevic2021machine}. Finally, this information can be used in risk models for natural hazards  or economic damage functions related to climate change, where it enables an explicit representation of the exposure of a building stock.
+
+Europe is currently the world region with the richest open building stock data, in terms of the joint availability of \textit{footprints} and \textit{attributes} \cite{biljecki2021open}, offering the best conditions to prototype a database of building stock characteristics at the continental level. However, there is currently no single database combining all buildings available digitally in Europe. Tools developped by the European Union (EU) like CORDA\cite{corda22} or EU Building Stock Observatory\cite{EU-BSO-22} represent first attempts at creating such database, but the first focuses on the seamless integration of only few datasets with highest quality standards, while the second only provides country-level aggregated statistics.  There has been a trend towards more open data releases from governments in recent years, partly orchestrated by the European Union project INSPIRE \cite{inspire2022,bartha2011standardization}. Unfortunately, these numerous datasets are fragmented and heterogeneous, which hinders their usability. While large technology companies have released country- or continent-level datasets of building \textit{footprints} recently, those have mostly focused on other continents, e.g., Africa or America\cite{sirko2021continental,bing2022}. In Europe, 
+OpenStreetMap (OSM) provides the only single database for all EU countries, based on the contributions of millions of mappers \cite{haklay2008openstreetmap,mooney2017review,sarretta2021towards}. However, OSM has quality issues such as a varying coverage, an inconsistent description, and lack of \textit{attributes} \cite{sarretta2021towards,biljecki2021open}. 
+Therefore, there is a need to identify available data, assess their quality, and aggregate the best existing datasets to create a complete building database for Europe. Such centralized database can amplify the value of individual datasets by unlocking novel research opportunities across scales\cite{seto2017sustainability,elmqvist2021urbanization,creutzig2015towards,milojevic2021machine}, including comparative studies such as city typologies \cite{creutzig2015towards} and unprecedented continental-level studies. 
+
+Here, we present \textsc{eubucco} v0.1, a database of individual buildings covering all 27 EU countries and Switzerland, which represent 378 regions and $40,829$ cities. \textsc{eubucco} v0.1 contains building \textit{footprints} for  $\sim$ 206 million buildings and three main building \textit{attributes} --  \textit{height}, \textit{type} and \textit{construction year} -- for respectively 74\%, 40\% and 24\% of the buildings, see Table~\ref{tab:country stats} for country-level values.
+Our input datasets include 50 heterogeneous open government datasets and OSM, see Fig.~\ref{fig:intro_fig}. 
+Our workflow involve three steps. First, we identified candidate datasets. Second, we retrieved data involving negotiation, web scraping, and various APIs. Third, we harmonized the data to make \textit{geometries} and \textit{attributes} comparable. The last step also involved introducing a consistent administrative sub-division scheme that underpins the database structure.
+Finally, we performed extensive validation to monitor data coverage and quality throughout our workflow.
+
+\textsc{eubucco} v0.1 gathers timely information for high-resolution analysis of the EU building stock, which is highly relevant for policy making on the EU, national and city level, urban planning as well as academic research. By identifying and assessing the relevance of various datasets, we enable users to easily find and access data across the EU. By collecting, harmonizing, cleaning and redistributing all the data through a simple download approach, we ensure a high usability. The code used to generate the database is provided as a Github repository\cite{eubucco-0.1-code2022} together with the documentation of all input data to enable transparent re-use, verification, update and modification. This database is therefore reproducible, i.e.\ the code allows to recreate the repository with little manual intervention.
+
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Country} &   \textbf{Buildings [\textit{n}]}  &  \textbf{Footprint area [m\textsuperscript{2}]} &  \textbf{Heights [\%]} &  \textbf{Ages [\%]} &  \textbf{Types [\%]} \\
+\midrule
+Germany     & $43,644,887$ &  $6,108,343,562$ &      66 &   0 &    66 \\
+France      &  $47,847,810$ &  $5,851,322,659$ &      98 &   45 &    54 \\
+Italy       &  $20,674,153$ &  $3,668,104,389$ &      69 &   7 &    50 \\
+Spain       &  $16,584,609$ &  $3,095,106,421$ &      93 &   98 &    99 \\
+Poland      &  $14,404,767$ &  $2,099,046,447$ &      100 &   0 &    0 \\
+Belgium     &  $11,945,733$ &  $1,572,052,878$ &      100 &   0 &    0 \\
+Netherlands &   $9,692,657$ &  $1,202,665,088$ &      100 &   100 &    0 \\
+Austria     &   $4,135,733$ &    $867,271,697$ &      7 &   0 &    16 \\
+Denmark     &   $5,691,756$ &    $738,533,830$ &      0 &   0 &    0 \\
+Finland     &   $5,370,223$ &    $691,145,892$ &      2 &   1 &    1 \\
+Czechia     &   $4,044,659$ &    $673,376,186$ &      8 &   0 &    92 \\
+Sweden      &   $2,532,313$ &    $568,473,802$ &      3 &   0 &    27 \\
+Switzerland &   $2,641,582$ &    $506,401,558$ &      100 &   0 &    0 \\
+Slovakia    &   $3,488,125$ &    $428,026,555$ &      95 &   0 &    87 \\
+Hungary     &   $1,546,359$ &    $337,332,876$ &      3 &   0 &    33 \\
+Portugal    &   $1,215,018$ &    $325,743,275$ &      4 &   0 &    32 \\
+Romania     &   $1,332,570$ &    $323,929,666$ &      7 &   0 &    21 \\
+Lithuania   &   $1,924,431$ &    $290,400,677$ &      0 &   0 &    0 \\
+Ireland     &   $1,610,614$ &    $243,282,003$ &      13 &   0 &    67 \\
+Greece      &     $864,237$ &    $187,420,816$ &      5 &   0 &    13 \\
+Slovenia    &   $1,162,832$ &    $182,617,284$ &      94 &   0 &    19 \\
+Croatia     &     $873,080$ &    $147,590,430$ &      1 &   0 &    19 \\
+Bulgaria    &     $448,470$ &    $145,130,155$ &      15 &   0 &    35 \\
+Estonia     &     $803,218$ &    $132,899,346$ &      100 &   0 &    0 \\
+Latvia      &     $513,316$ &    $112,759,247$ &      6 &   0 &    17 \\
+Cyprus      &     $467,594$ &     $74,417,047$ &      100 &   0 &    0 \\
+Luxembourg  &     $143,923$ &     $43,143,728$ &      100 &   0 &    0 \\
+Malta   &     	  $142,616$ & 	  $32,599,347$ &  	100 &	0 &	0 \\
+\midrule
+\textbf{Total}       & \textbf{205,\thinspace747,\thinspace285} & \textbf{30,\thinspace649,\thinspace136,\thinspace862} &      \textbf{74 \%} &   \textbf{24 \%} &    \textbf{45 \%}\\
+\bottomrule
+\end{tabular}
+\caption{\label{tab:country stats} \textbf{Country-level content statistics of \textsc{eubucco} v0.1.} Values correspond to the final counts from the final provided as the database at the end of pipeline, and do not account for the buildings that were dropped throughout the workflow. The values for \textit{height}, \textit{construction years} and \textit{types} correspond to the percentage of buildings for which the attribute is available in \textsc{eubucco} v0.1. Countries are ordered by descending total building footprint area.}
+\end{table}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{figs/intro_fig.png}
+\caption{\textbf{The 50 input datasets parsed to generate \textsc{eubucco} v0.1.} Bold font indicates country-level datasets, while normal font indicates region- or city-level datasets. Datasets for a same country are designated with different tones of the same color. All areas where OpenStreetMap was used as basis for the building footprints are colored in light pink.}
+\label{fig:intro_fig}
+\end{figure}
+
+
+\section*{Methods}
+
+Creating \textsc{eubucco} v0.1 involved three main steps: 1) identifying relevant data; 2) retrieving it from individual websites; and 3) harmonizing the various input datasets into one common format with consistent building \textit{footprint geometries}, \textit{attributes} (\textit{height}, \textit{type} and \textit{construction year}) and administrative boundaries (country, region and city) to create a database structure. We performed extensive data validation procedures throughout the workflow to guarantee completeness, minimal errors and no duplicates (see Technical Validation). The different steps of the workflow are summarized on Fig.~\ref{fig:methods}. 
+
+Our data processing workflow\cite{eubucco-0.1-code2022} is almost entirely written in Python in order to maximise automation and reproducibility compared to desktop geographic information system (GIS) software. We created a Python module ${\tt eubucco}$ with core functions for each of the processing steps. In order to facilitate updates once new data become available, whenever possible we wrote generic functions that for most steps can be run in parallel for each datasets via an argument parser e.g. as a job array. We also used PostGIS and QGIS for a small number of tasks, documented on the repository e.g. via ${\tt.txt}$ files.  
+
+
+\subsection*{Data identification}
+
+\textsc{eubucco} v0.1 contains 50 individual datasets, which we first had to identify and screen for inclusion. See a detailed summary of all the input datasets used in ${\tt input-dataset-metatable-v0.1.xlsx}$ in Data Records. Refer to the upper panel of Fig.~\ref{fig:methods} for a visualization of the data identification steps within the workflow.
+
+\subsubsection*{Inclusion criteria}
+
+The buildings in \textsc{eubucco} v0.1 are defined liberally as a\textit{ny permanent structure with a roof and walls}. 
+As criterion for inclusion, only datasets containing geospatial vector data of the \textit{footprint} -- or in other words, the ground surface -- of a building needed to be present. 
+Input datasets can either be 2D (with only the \textit{footprint} as \textit{geometry}), 2.5D (with \textit{footprint} and \textit{height} as one or several \textit{attributes} e.g. max height, height of the eaves, etc.) or 3D (with walls and roof \textit{geometries}). One-point coordinate data, for example in an address dataset, is considered as not sufficient for inclusion and a polygon representation was required.
+Input datasets ideally contains \textit{attributes} of interest (\textit{height}, \textit{construction year} or \textit{type}), but this was not a requirement.
+The dataset coverage can be at country, region or city level. 
+We did not set inclusion criteria related to the publication date of the dataset. In cases when several versions of the dataset existed, we used the latest. We acknowledge that our dataset does not represent a snapshot of the EU building stock at a given moment, but rather contains the newest data available for each area to the best knowledge of the authors.
+Finally, the license under which the dataset was originally released at least has to allow free use for scientific research, see detailed license information in ${\tt input-dataset-metatable-v0.1.xlsx}$. We included datasets that did not allow for redistribution or commercial use but such datasets were treated separately, see the Outbound licensing section for details.
+
+\subsubsection*{Search approach}
+
+For OSM, no search was needed given that OSM is a single dataset. For government sources, we first searched for country-level datasets. When none were found, we searched for region- and city-level datasets.
+We used the geoportal INSPIRE \cite{inspire2022}, and screened entries in the spatial data theme `Buildings'. 
+We queried a standard search engine, and country-specific open data portals for `building dataset' in national languages. We also used technical keywords specific to this kind of datasets e.g. `LoD1' -- the \textit{level of detail} of a 3D building dataset \cite{biljecki2016improved}. Finally, we found additional datasets by crowdsourcing on social media.
+
+Through this approach we could identify 49 relevant datasets, but also countries and regions where government datasets exist but are not open or only available for a fee, often prohibitively high. In such cases, we contacted the relevant data owner to ask whether the data could be used for academic purposes.  See ${\tt excluded-datasets.xlsx}$ for the list of relevant datasets identified that were not included with the reasons for excluding them. The table includes the contact date, as the license of a given dataset may change in the future and become open.
+
+
+\subsubsection*{Selecting between relevant datasets}
+
+Whenever possible, we favored government data over OSM as basis for the \textit{footprints}. The rational for this choice is that, when available, government data tends to have a better coverage both in terms of \textit{footprints} and \textit{attributes} than OSM, even if the opposite can happen \cite{Antoniou:2015hl,Minghini.2019}. A future version of this database should include a detailed comparison of OSM and government data. When no data for a country or regions of a country was available, OSM is the fallback for building \textit{footprints} in \textsc{eubucco} v0.1. In some cases, several candidate datasets representing the same area were found on a regional open data portal with a description and metadata that was not conclusive; then, we analyzed data samples of each candidate to determine which one to include.  If an area is available in an individual dataset but also part of a larger dataset, different inclusion decisions were made. If the smaller dataset did not contain additional \textit{attributes} of interest (\textit{height}, \textit{construction year} or \textit{type}) compared to the larger one, then the larger dataset is being used. If the smaller dataset contains any \textit{attributes} but the larger area does not, then the smaller dataset is used for this area. For Prague and Brno in Czechia, we had to make an arbitrary decision between the country-level data that contained \textit{type} information and the city-level datasets that contained \textit{heights} -- here we opted for \textit{height}.  
+
+\subsection*{Data retrieval}
+
+Once identified, retrieving the data involved the download of the relevant files via various interfaces on government portals, as well as downloading OSM data from the Geofabrik server. We retrieved in total $190,387$ individual files for the 50 datasets. Refer to the middle panel of Fig.~\ref{fig:methods} for a visualization of the data retrieval steps within the workflow.
+
+
+\subsubsection*{Government data}
+
+A large heterogeneity exists in term of download services for government datasets: selection tools on interactive maps, few to many links on simpler or more complex web pages, and  application programming interfaces (APIs). This required domain knowledge of each specific approach and sometimes required to build dataset-specific web scraping routines. The download approach for each dataset is documented in ${\tt input-dataset-metatable-v0.1.xlsx}$. 
+
+Datasets are provided either as one file, multiple files corresponding to smaller administrative areas or tiles, and sometimes several levels of aggregation are available. If the data could be downloaded from a government portal via few single links or queried generating download links via email, the download was conducted manually.
+
+In cases where a high number of links were present or a complex and time consuming download procedure was required, we used Python web scraping tools to automatically download the data, see ${\tt database/preprocessing/0-downloading}$\cite{eubucco-0.1-code2022}. 
+We developed specific download workflows for 10 different websites, building up on the web scraping packages Selenium.
+
+In a few cases, we downloaded the data via APIs or transfer protocols, including WFS, OGC API, and FTP. When datasets where available as ATOM feeds, we used web scrappers instead of browser-based clients. 
+In three cases, the datasets were only available via a selection tool on an interactive map with low limits per query, making the manual download of the whole area virtually impossible. In such cases, we contacted the data owner to ask for a data dump, which they did provide in the cases of Emilia-Romagna and Piemonte, while Niedersachsen provided a url to a list of download links.  
+
+\subsubsection*{OpenStreetMap}
+
+OSM data was downloaded as $\tt{.pbf}$ files from the Geofabrik download server using the Python library Pyrosm, either at the country level or region level for large countries large Germany and Italy where regional downloads are possible. The retrieval of buildings from OSM $\tt{.pbf}$ files was done via filtering per tags (which is similar to an attribute column). 
+
+There were two main challenges while filtering: 1) in a $\tt{.pbf}$, buildings are not separated from other polygons (e.g. land use) as specific datasets, 2) tag values that can be used for filtering are noisy and incomplete, as OSM mappers are free to use any value of their choice including none. We followed the most common approach, which is to request any non-null value in the $\tt{building}$ tag/column using a wildcard: $\tt{building=*}$. Most values in this column are either $\tt{yes}$ or indicate the type of the building e.g. $\tt{house}$ or $\tt{commercial}$. A small share of buildings may not have a value in this column and are lost, but adding any other tag e.g. $\tt{building:use=* \ OR \ amenity=*}$ without requiring a value for the building tag, led to the inclusion of non-building polygons e.g. district boundary or land use polygons. These would then need to be excluded, which is not trivial. Our approach is conservative in the sense that it prevents true negatives while false positives could only arise from erroneous $\tt{building}$ tag values, which are expected to be very few.     
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\linewidth]{figs/methods_no_valid.png}
+\caption{\textbf{Overview of the processing workflow of \textsc{eubucco} v0.1.}}
+\label{fig:methods}
+\end{figure}
+
+\subsection*{Data harmonization}
+
+We transformed the retrieved files and harmonized the file formats, the \textit{geometries}, the \textit{attributes}, introduced a common administrative sub-division and a unique identifier (ID) scheme for the whole database.  Refer to the lower panel of Fig.~\ref{fig:methods} for a visualization of the data harmonization steps within the workflow.
+
+\subsubsection*{File formats}
+
+We encountered seven different file formats (see ${\tt input-dataset-metatable-v0.1.xlsx}$), which we all converted into the $\tt{.csv}$ format -- a simple, versatile and universally supported tabular file format. The main drawback of $\tt{.csv}$ is that it does not natively support spatial objects. We used the well-known text (WKT) encoding to write building \textit{geometries} into a string, an approach used for example by Google AI's Africa Open Building dataset \cite{sirko2021continental}. Our $\tt{.csv}$ files then contain all \textit{attributes} and \textit{geometries} as columns of a dataframe. All the file format conversion code and instructions can be found in the repository under $\tt{/database/preprocessing/1-parsing}$ and in the module $\tt{preproc.parsing.py}$ \cite{eubucco-0.1-code2022}. 
+
+Parsing $\tt{.gml}$ and $\tt{.xml}$ files was made complex by the little support for these formats in high-level Python libraries or desktop GIS tools. In addition, despite the existence of standards for $\tt{.gml}$ encoding, almost all datasets had specificities in the way they named relevant elements (the basic building blocks of a XML-type document used as a container to store information, thus requiring a versatile parser. We developed our own parser that retrieves, from any of the $\tt{.gml}$ and $\tt{.xml}$ files encountered, building \textit{footprint geometries}, IDs and \textit{attributes} of interest (see code repository\cite{eubucco-0.1-code2022}, in the module $\tt{preproc.parsing.py}$). 
+
+Next to $\tt{.gml}$ and $\tt{.xml}$, the parser also handles shapefiles ($\tt{.shp}$) and OSM's $\tt{.pbf}$ files by directly reading in \textit{geometries}, IDs and \textit{attributes} using the Python library GeoPandas\cite{kelsey_jordahl_2019_2585849}. For a few files, \textit{attributes} were given as separate tabular files ($\tt{.csv}$ or $\tt{.dbf}$), which we matched to the building \textit{geometries} by ID. Finally, a few files were available as $\tt{.SQL}$ or $\tt{.sqlite}$ files or database dumps, which we parsed using PostGIS.
+
+
+\subsubsection*{Geometries} Harmonizing \textit{geometries} included three main parts: extracting a \textit{footprint} polygon for each building geometry, reprojecting to a single coordinate reference system (CRS) and cleaning the \textit{footprint geometries}.
+
+As the datasets came with \textit{geometries} either in 2D, 2.5D or 3D, we converted all building \textit{geometries} to 2D \textit{footprint} polygons only. We did this for two reasons. The main reason was to simplify the parsing and the structure of the database with a unique building element represented as one row per building. A second reason was to harmonize to a certain extent the representation of buildings in the database. The height dimension was conserved for all 3D buildings via the attribute $\tt{height}$, see below. Thus, the \textsc{eubucco} v0.1 adopts a so-called 2.5D representation of buildings, also known as LoD1, as the \textit{footprint} can be extruded using the $\tt{height}$ value. We acknowledge a voluntary loss of information as the LoD2 datasets contained more details about the roofs that was not conserved in this first version of the database or as certain datasets contained several \textit{height} \textit{attributes}. Users can find the original data LoD of each input dataset in ${\tt input-dataset-metatable-v0.1.xlsx}$. To extract footprint polygons, we used the semantic information when available in the $\tt{.gml}$ elements e.g. $\tt{bldg:GroundSurface}$ or as an attribute in shapefiles. Otherwise, we dropped the $Z$ dimension and projected all building 3D point coordinates onto a 2D $(X,Y)$ plane. 
+The datasets also came in 34 different CRS -- with some in degrees and some in meters. While a country- or region-specific CRS reduces the bias in the \textit{geometries} due to the projection, a large number of them generates overhead when handling several or all of them together. Therefore, after the initial parsing of the datasets, we reprojected all building \textit{geometries} to a single EU-scale CRS in meters: ETRS89 ($\tt{EPSG:3035}$).
+
+Finally, as the datasets were produced by various different actors and methodologies, sometimes unknown, there were potential differences in building \textit{geometry} definitions, precision and quality. It is out of the scope of this study to comprehensively assess and harmonize these dimensions. We kept the \textit{footprint} \textit{geometries} mostly identical to the initial datasets. The main alteration of the \textit{geometries} was to harmonize the geometry type to polygon, by converting multipolygons to polygons. We also ran several geometry cleaning steps to detect invalid, empty and null \textit{geometries} and fixed or if not possible filtered them. For specific details, refer to the module $\tt{preproc.parsing.py}$ \cite{eubucco-0.1-code2022}
+
+
+\subsubsection*{Attributes} 
+We harmonized values for the three \textit{attributes} of interest (\textit{height}, \textit{type} and \textit{construction year}) and ensured that a single ID value was available for every building. See Fig~\ref{fig:db_content} for an illustration of the attributes. We chose \textit{height}, \textit{type} and \textit{construction year} specifically for two main reasons. First, we wanted to limit the number of attributes with low number of values and have the same attributes in all regions for consistency. The selected three attributes are the most populated attributes in existing building datasets\cite{biljecki2021open}. Additionally, prediction algorithms that can infer missing values for these attributes using machine learning are available in the literature\cite{milojevic2020learning,rosser2019predicting,sturrock2018predicting} and could be immediately leveraged in a future version of the database. Second, this set of attribute is of high relevance for many use cases, for example energy modelling, see Usage Notes. Future iterations of this database will aim increase the completeness of the initial set of attributes and try to expand to new attributes such as roof type or building materials.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figs/db_content.png}
+\caption{\textbf{Illustration of the attributes present in \textsc{eubucco} v0.1.} The three maps represent buildings \textit{footprints} and the buildings \textit{attributes} present in the database -- \textit{type}, \textit{height} and \textit{construction year} -- for an example neighborhood in Paris. While the \textit{footprint} shows the urban morphology of the neighborhood, the \textit{attributes} enable to distinguish further context.}
+\label{fig:db_content}
+\end{figure}
+
+\medskip \noindent \textit{Heights.} \hspace{0.1cm} For buildings \textit{heights}, it was not possible to fully harmonize values with one definition, so we used mixed definitions that are transparently documented in ${\tt input-dataset-metatable-v0.1.xlsx}$. Indeed, datasets do not all come with the same level of detail and sometimes do not state which height definition is used. The \textit{height} of a building is most commonly defined as the difference between the ground and the highest point of the construction (which can be a chimney), the highest or the lowest point of the roof main structure e.g. the eaves, or as a percentile of the point cloud generated by the aerial sensing of the building \cite{peters2021automated}. Those definitions may be similar in case of a flat roof, but possibly lead to large differences in case of steep pitched roofs. Future iterations of the \textsc{eubucco} would ideally contain a roof type, inclination, orientation, and a estimation of the difference between lowest and highest roof point \cite{zhang2022vectorized}.    
+
+To retrieve building \textit{heights} from the datasets, we either parsed them directly as a single value when available as a $\tt{.gml}$ element or as a column in a tabular file, computed them as the difference between two values such as ground and maximum building elevation when only such information was provided, or computed them directly using 3D \textit{geometries}. When possible, for example in the case of LoD2 models with semantic information on roof elements, we favored the definition using the lowest point of the roof structure, as it has the most relevant interpretation for use cases interested in estimating living space, e.g. building energy demand models, which we decide to favor in this version. Users interested in other height definitions can modify this aspect in the parser. In cases where only floor information was available, in Spain, Cyprus and for many OSM buildings, we multiplied the number of floors by an floor height of 2.5 m -- the minimum floor-to-ceiling requirement in several European countries\cite{milojevic2020learning}. 
+
+\medskip \noindent \textit{Types.} \hspace{0.1cm} Building \textit{types} also came with different levels of detail across countries; therefore, to harmonize \textit{types} while conserving the original level of detail, we used two \textit{type} \textit{attributes}: $\tt{type\_source}$ (the \textit{type} in the original dataset) and $\tt{type}$ (harmonized \textit{types}). For the harmonized \textit{types}, we classified buildings into two groups, residential and non-residential, as this was the simplest, yet a valuable distinction that can be made. 
+
+We manually mapped each $\tt{type\_source}$ value to a $\tt{type}$ value, creating one matching table per dataset or sometimes one table several datasets when similar codes coming from a cadastral standard were used across datasets, in Germany and Italy. Those tables are available as ${\tt type\_matches-v0.1.zip}$, see Data Records. When \textit{types} where not available in English, we translated them from their original languages into English using the software DeepL. We classified mixed-use buildings as residential following the intuition that many mixed use buildings host commercial activities on their ground floors and are used for housing in more than one floor above, making the residential use the predominant use overall, but which may be incorrect in some cases. In cases when the use \textit{type} is ambiguous e.g. `civil building' when classified the \textit{type} as unknown.
+
+In government datasets, \textit{types} could be retrieved as $\tt{.gml}$ elements or as a column in tabular files. In some cases, \textit{types} contained strings with semantic information that could be directly used, in others, codes were provided and it was necessary to locate a matching table and replace codes with their semantic counterpart. In OSM, we used the \textit{types} that could be found in the tag $\tt{building}$. We removed the `yes' entries from $\tt{type\_source}$ which then corresponded to `unknown' in $\tt{type}$. There was an extremely large number of \textit{types}, but we only kept the 53 most common ones, which were used in at least 10,000 buildings and in total account for >99\% of all values. We allocated those most common \textit{types} to the residential or non-residential $\tt{type}$ values, while marking remaining ones as unknown.
+
+\medskip \noindent \textit{Construction years.} \hspace{0.1cm} The construction year is assumed to be the year of the end of construction. This information is explicit in a few datasets but often not available. For the sake of conciseness for the variable names, the variable for \textit{construction year} is $\tt{age}$ in the database, as this is also done in other studies\cite{rosser2019predicting}, although there is slight semantic difference. To harmonize building \textit{construction years}, we retrieved only the year from available values. The original value sometimes contained longer formats e.g. `year/month/day'. In government datasets, construction years could be retrieved as $\tt{.gml}$ elements or as a column in tabular files. In OSM, construction years could be found in the $\tt{start\_date}$ tag. Here, we filtered all values that did not contain relevant numerical information enabling to identify a year.
+
+\subsubsection*{Administrative boundaries}
+
+Another major harmonization step was to use a consistent administrative sub-division to enable queries of the database at the country, region and city level. This step was needed as most government datasets and OpenStreetMap do not contain this information for all buildings. We used the Database of Global Administrative Areas (GADM) in its version 3.6, which provides the administrative boundaries of all countries in the world as a single dataset with their names and boundary polygon. We performed a spatial join to match the buildings to their administrative boundaries, as well as region and city name. When a building was located on the boundary between two cities or regions, we allocated it based on the larger area of intersection. The relevant code and details for this step can be found in $\tt{/database/preprocessing/2-db-set-up/}$ and in the module $\tt{preproc.db\_set\_up.py}$ \cite{eubucco-0.1-code2022}
+
+GADM contains several sub-division levels from 0 (country) to 5 (usually district, understood as subdivisions of municipalities). The number of levels varies across countries and the specific meaning of the level also depends on each country's internal administrative structure. For all countries, we used the Level 0 for country and the Level 1 for the region-level boundaries. For the city level, we analyzed for each country the boundaries and made a decision on which level to choose. The levels chosen range from Level 1 (in the smallest countries like Cyprus where no lower levels were available) to 4 (in larger countries like France). We acknowledge that such grouping may lead to different city definitions across countries, yet we provide a clear overview of which level we chose in ${\tt gadm-city-levels-v0.1.csv}$. For example, in rural areas in the Netherlands, the lower level available corresponds to a grouping of several villages, while in Germany those are typically considered as individual cities. 
+
+We had to handle city name duplicates for cities with many occurrences, e.g. Neunkirchen, occurring in the German states Baden-Württemberg, Bayern, Nordrhein-Westfalen, Rheinland-Pfalz and Saarland. If these were located in different countries or regions, we renamed the city $\tt{<city> (<region>)}$. If two cities with the same name were present in the same region, we added indices at the end of the city name to make them uniquely identifiable. 
+
+
+\subsubsection*{Unique identifier}
+Given the various dataset-specific ID schemes, we had to introduce a harmonized ID scheme, which ensures that each building can be unambiguously identified. We used codes provided in GADM to do so.  Our IDs take the form `EUBUCCO version identifier -- GADM identifier -- city-level building identifier', where the GADM identifier corresponds to the GADM levels existing between country and city level (1, 2, 3 or 4). For example, ${\tt v0.1-DEU.14.5.4.1\_1-1222}$ is a building from \textsc{eubucco} version 0.1, located in Germany in the fourteenth state, fifth district, fourth local city cooperation group, first city in the GADM code scheme (the ${\tt \_1}$ at the end is common to all codes in GADM), and is the 1222\textsuperscript{th} building from this city in our database. Most datasets contained unique building identifiers, which we preserved, however a few did not. In such cases, we created an ID field for the dataset marked by the abbreviation $\tt{id}$ and ascending number, e.g. $\tt{id1}$, $\tt{id2}$, etc.
+
+\subsubsection*{Outbound licensing}
+
+The final aspect that we harmonized, as much as possible given incompatibilities, was the licensing. Out of 50 datasets, 3 were in the public domain, 41 required only attribution, 2 had an additional share-alike requirement, 2 required a non-commercial use of the data, and 2 did not allow the redistribution of the data. The inbound license of each input dataset used in \textsc{eubucco} v0.1 can be found in ${\tt input-dataset-metatable-v0.1.xlsx}$.
+
+One main constraint was the fact that OSM used a share-alike license, ${\tt ODbL}$, which requires that any redistribution of the database has be done under the same license. To maximize the number of datasets under the same license, and to facilitate further integration between OSM and government data, we decided to apply ${\tt ODbL}$ to all possible datasets. By doing this, we could harmonize the license for 46 out of 50 datasets, which represent more than 95\% of the buildings in the database. We acknowledge that this choice makes the license more restrictive than some inbound licenses and limits the usage of the relevant data, but it also ensures that any downstream re-use of the data has to remain open access.
+
+For the other dataset whose license had a share-alike requirement but not ${\tt ODbL}$ (namely Prague, licensed under ${\tt CC-BY-SA}$) and for the one dataset that had a non-commercial use requirement (namely Abruzzo, licensed under ${\tt CC-BY-NC}$), we redistribute the data under the original license. Finally, for the datasets whose license did not permit redistribution, namely Wallonie and Malta, and for Mecklenburg-Vorpommern where the redistribution conditions were unclear, we did not include them on our repository but provide code to enable users to reproduce the workflow we performed for these datasets, so that they can easily add them to the database for their own usage. 
+
+The datasets included on the repository that are not licensed under ${\tt ODbL}$ are indicated in the repository's README and their license is also added to their respective file names, i.e. the file name is ${\tt v0\_1-ITA\_1-OTHER-LICENSE-CC-BY-NC.zip}$ for Abruzzo and ${\tt v0\_1-CZE\_11-OTHER-LICENSE-CC-BY-SA.zip}$ for Prague.
+
+
+\section*{Data Records}
+
+\textsc{eubucco} v0.1 contains $205, 747, 285$ individual buildings each corresponding to an entry / row in the database. The database covers 28 European countries -- all the EU countries and Switzerland, see Table~\ref{tab:country stats} for the complete country list --, and contains buildings in 378 regions and $40,829$ cities. In addition to the main files containing building-level data, we provide additional tables that either provide information on the database content or enable to match additional attributes to the buildings.
+
+\subsection*{Main files}
+The main files are provided in tabular format as $\tt{.csv}$, each compressed into a $\tt{.zip}$ file and broken into 220 files. The files are split at the country or regional level depending on their size and can be concatenated into one single dataframe for all the EU. Each row contains the same seven variables listed in Table~\ref{tab:variables}, six \textit{attributes} and one geometry column. The main files are in total $\sim$ 109 GB zipped and $\sim$ 330 GB unzipped.
+
+\subsubsection*{Structure}
+To ensure usability, in \textsc{eubucco} v0.1 we broke down the dataset into chunks of maximum 2 GB once zipped. When the archive file of the country was under this limit, we kept it at the country level. Otherwise, we split the country into regional files. A few large regions were still larger that 2 GB once compressed, e.g. in Nordrhein-Westfalen, requiring further splitting. Depending on the split level, file names are ${\tt <database\_version>\-<GADM\_code\-<part>.<csv\ or\ zip>}$. In future versions, we will provide different aggregation levels to accommodate different usages, and possibly different files formats e.g. Parquet or SQL for the larger dumps.
+
+\subsubsection*{Variables}
+The first and second \textit{attribute} variables are IDs.  ${\tt id}$ is the unique building identifier based on the version number of the database (e.g. ${\tt  v0.1}$), the identifier of the GADM boundary (e.g. ${\tt TU.3.2\_1}$) and an ascending number for all buildings in the boundary, connected by a dash. 
+${\tt id\_source}$ is the ID from the original source file.
+ 
+The following four attribute variables contain information about building characteristics, including the building \textit{height} (${\tt height}$), \textit{construction year} ($\tt{age}$), \textit{type} following a residential / non-residential / unknown classification (${\tt type}$ ) and the type for the input dataset (${\tt type\_source}$). In \textsc{eubucco} v0.1, main attributes have a coverage for height, type and construction year of respectively 74\%, 45\% and 24\% of the buildings. For country-level values, refer to  Table~\ref{tab:country stats}  and for city-level counts, refer to ${\tt city-level-overview-tables-v0.1.zip}$ .  
+
+The last variable $\tt{geometry}$ contains the building \textit{footprint}. This is a geospatial vector geometry object, specifically a 2D polygon, represented as a series of point coordinates $(X,Y)$ in a referential system defined by a CRS, here ETRS89 ($\tt{EPSG:3035}$). In order to write the files as $\tt{.csv}$, which does not support geospatial objects, the geometry was encoded as a WKT string. This string is human-readable and corresponds to the actual polygon in the format $\tt{POLYGON ((x_1 \ y_1, x_2 \ y_2,...))}$. 
+
+\begin{table}[h!]
+\centering
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lll}
+\hline
+\textbf{Variables} & \textbf{\textit{type}} & \textbf{Definition} \\
+\hline
+${\tt id}$ & string & Unique \textsc{eubucco} building identifier based on the version number of the database, 
+\\ & & the GADM city identifier and an ascending number for all buildings in the city \\
+
+${\tt id\_source}$ & string & Identifier from the original dataset (if no identifier was provided the file name and an 
+\\ & & ascending number for all buildings in the country was applied). \\
+
+${\tt height}$ & float & Distance in meter between the elevation of the ground floor and of a point representing \\
+& & the top of the building (lowest or highest roof point, highest building point,...); see the \\
+& & relevant \textit{height} definition in ${\tt input-dataset-metatable-v0.1.xlsx}$ \\
+
+$\tt{age}$ & integer &  Initial \textit{construction end year} of the building (e.g. not the renovation year, if any) \\
+
+$\tt{type}$ & string & Usage \textit{type} of the building, based on our classification \\
+&& $ \in \{\tt{residential},\tt{non-residential},\tt{unknown}\} $ \\
+
+${\tt type\_source}$ & string / & Usage \textit{type} of the building, from the original dataset, possibly a human-readable type or a code; \\
+& float & see ${\tt type\_matches-v0.1.zip}$ for human-readable matching translated in English if relevant \\
+
+${\tt geometry}$ & string & \textit{Footprint} of the building as a 2D \textit{(X,Y)} polygon object projected in ETRS89
+$(\tt{EPSG:3035})$ \\
+& & and encoded in a WKT string \\
+\hline
+\end{tabular}
+\caption{\label{tab:variables}\textbf{Variables in \textsc{eubucco} v0.1}}
+\end{table}
+
+
+\subsection*{Additional files}
+We provide several additional files that may be used together with the main database files e.g. to match \textit{attributes} or that can give the user an overview of the content of \textsc{eubucco} v0.1: 
+
+
+\begin{enumerate}[topsep=1pt]
+
+     \itemsep-0.05em 
+    
+    \item \textbf{Metadata table on input datasets} (${\tt input-dataset-metatable-v0.1.xlsx}$): This table contains 38 dimensions that provide users with the main information about input datasets. Specifically, the file contains the input dataset's
+    
+    \begin{itemize}[topsep=1pt]
+        \itemsep-0.05em  
+        \item name and area information (e.g. country, dataset specific area and dataset name)
+        \item meta info (e.g. access date, data owner, license, link to ressource or download approach)
+        \item structure (e.g. file format, breakdown or additional files matched for \textit{attributes})
+        \item content relevant to \textsc{eubucco} v0.1 (e.g. availability of given \textit{attributes} or LoDs)
+        \item variable names (e.g. ID, construction year, or building element for ${\tt .gml}$ files)
+        \item and validation information via the number of buildings at three stages of the workflow (after parsing, cleaning and matching with administrative boundaries) together with the losses that occurred and a short explanation in case of large losses
+    \end{itemize}
+
+    \item \textbf{Table on excluded datasets} (${\tt excluded-datasets-v0.1.xlsx}$): This table provides an overview of available government datasets that were not included in this study with a rational why, most often because they were only available at a high cost. For all these datasets we contacted the data owner to ask whether the data were available for free for research; the status of the dataset reflects their answer and a contact date is also indicated in the file.  
+    
+    \item \textbf{Database content metrics at the city-level} (${\tt city-level-overview-tables-v0.1.zip}$): The overview files provide 48 city-level metrics for all $41,456$ cities, of which 627, mostly very small cities, do not contain any building. The files enable a detailed overview of the database content in term of \textit{geometries} and \textit{attributes} can be used to study patterns across regions and countries and can also be used to identify bugs or outliers. They are provided as a table for each country with the following naming: ${\tt <country>\_overview-v0.1.csv}$. Each table contains:
+    
+    \begin{itemize}[topsep=1pt]
+        \itemsep-0.05em  
+        \item the city ID, name and region
+        \item building counts and footprint metrics including total number of buildings, total footprint area, footprint area distribution, max footprint area, number of 0-m\textsuperscript{2} \textit{footprint}s, etc.
+        \item \textit{height} distribution metrics in relative and absolute terms, including overall metrics e.g. median and max value, also outliers outside of a reasonable range e.g. negative values, and metrics by height bins e.g. $[3,5($ or $[11,15($
+        \item \textit{type} distribution metrics in relative and absolute terms computed for the variable $\tt{type}$ and describing the proportion of residential, non-residential and unknown building \textit{types}
+        \item \textit{construction year} distribution metrics in relative and absolute terms grouped by \textit{construction year} bins e.g. $[1801,1900($ or $[1951,2000($ and also counting additional dimensions such as outliers outside of a reasonable range e.g. negative values 
+    \end{itemize}
+
+    \item \textbf{Type matching tables} (${\tt type\_matches-v0.1.zip}$): Multiple tables are provided for each relevant dataset or group of datasets (if cadaster codes apply for several datasets in Germany and Italy) as ${\tt <dataset>-type\_matches-v0.1.csv}$. These tables enable to map the \textit{type} of the raw data (${\tt type\_source}$) to the \textit{type} column (${\tt type\_source}$) of the database and provide an English translation of the \textit{type} of the raw data.
+    
+    \item \textbf{Administrative code matching table} (${\tt admin-codes-matches-v0.1.csv}$): this table enables to match the GADM code from building ids with its country, region, city and the input dataset per city. If files were split into parts during the upload process, the table informs which cities are summarised in which region part.
+    
+    \item \textbf{Administrative city levels} (${\tt gadm-city-levels-v0.1.csv}$): this table provides an overview of the GADM level that was chosen to define the city level per country.
+    
+\end{enumerate}
+
+
+\section*{Technical Validation}
+Our assays focused on guaranteeing the quality of the data on three main axes: 1) ensuring the maximal building stock completeness given the available data; 2) minimizing the number of incorrect data points; 3) ensuring there are no duplicate entries. We performed 11 individual checks, including the analysis of the raw data and consistency checks throughout the workflow to monitor possible data losses from alterations of the data, see overview on Fig.~\ref{fig:valid}. Whenever possible, we implemented automatic tests, such as removing invalid or empty \textit{geometries}, aiming to guarantee the validity of the data by design.   
+
+
+
+\subsection*{Missing entries}
+
+We aimed to ensure the maximum building stock completeness given the available data to mitigate biases in overall or local statistics, which also translate into errors in downstream analyses or modelling. 
+Given that the presence of \textit{footprint geometries} is the minimal condition for a building to be included in the \textsc{eubucco} v0.1, their absence equals to missing entries. 
+Missing \textit{geometries} may be due to the fact that buildings are missing in the original datasets or due to manipulations in the pipeline. Data points can be lost due to the introduction of the GADM boundaries or if the content does not meet the requirements of our validation procedure. Whenever we excluded buildings from the original data, we reported losses to provide a transparent assessment of the database coverage, see ${\tt city-level-overview-tables-v0.1.zip}$, in the ${\tt validation\ procedure}$ columns.
+
+\medskip  \noindent \textit{Issue 1: Missing geometry in input data.} \hspace{0.1cm} The completeness of OSM depends on the extent of the mapping in each city. In many regions, building \textit{footprints} will be missing in OSM. From our initial analyses, areas with substantially lower coverage are expected in Bulgaria, Croatia, Greece, Hungary, Romania and Portugal. In those countries, our analysis of the overview files shows that for larger cities, the coverage seems to be better than in rural areas. For more details, see ${\tt city-level-overview-tables-v0.1.zip}$. 
+
+We assumed that the coverage of government data is close to 100\%. This is likely to be a few percentage points less for datasets that were produced several years ago. Governments may have omitted a fraction of the buildings for multiple reasons. The provided code for the database allows future data releases to be integrated into an updated version.
+Future versions of \textsc{eubucco} will aim at more precisely assessing the coverage of input data both for OSM and government datasets.
+
+\medskip \noindent \textit{Issue 2: Geometry loss from manipulating numerous files.} \hspace{0.1cm} Some areas were provided as many small tiles, up to 10,000+ for Niedersachsen in Germany or in Poland. We used the overview tables to asses areas with very low coverage or 0 buildings and compared them manually with remote sensing images on Google Maps, to spot missing tiles. We also inspected manually for all countries that all main cities where present in an order of magnitude that seemed realistic based on their total footprint area. This enabled for example to identify errors due to the webscrapper when many large cities were missing, or also to identify that certain areas had not been included in a dataset. For example, we could identify that in Spain the autonomous communities of the Basque Country and Navarra were missing from the cadaster data and we could use OSM to fill those gaps.  This approach however does not guarantee that for a city which was cut in several tiles in the input dataset all of them were used, as if some but possibly not all tiles were parsed the reported metrics may not be identified as suspect. 
+
+\medskip \noindent \textit{Issue 3: Geometry loss from administrative boundary matching.} \hspace{0.1cm} If the extent of the dataset for an area was larger than the administrative boundary of that area, buildings would fall outside of it. In this case, we decided to drop those buildings for the sake of clarity and not to risk to create duplicates for cases with two adjacent datasets. We monitored the number of buildings before and after this stage to ensure that losses were reasonable. This check also enabled us to ensure that the data was properly projected and lying in the expected region. For more details, see ${\tt input-dataset-metatable-v0.1.xlsx}$.  
+
+\medskip \noindent \textit{Issue 4: Geometry loss from dropping wrong geometries} \hspace{0.1cm} 
+There are multiple cases in which \textit{footprint} polygons could be considered wrong and that could be assessed automatically at scale. Those included invalid (e.g. self-intersections of lines constituting the polygon), empty (there are no coordinates in the polygon object) and null (the footprint area is 0) \textit{geometries}. 
+For example, we aimed at fixing invalid \textit{geometries}, such as self-touching or self-crossing polygons, by adding a distance of 0 m via the buffer function as proposed in the user manual of the Python package Shapely \cite{gillies_2021}. After the data cleaning, we dropped all buildings for which the \textit{geometries} could not be fixed and were still invalid, null or empty. We monitored the number of buildings before and after dropping the \textit{geometries} to ensure that the building losses were minimal. For more information on losses after cleaning \textit{geometries}, see ${\tt input-dataset-metatable-v0.1.xlsx}$.
+
+\medskip \noindent \textit{Issue 5: Geometry loss from cleaning multipolygons.} \hspace{0.1cm} We altered multipolygon buildings to have only polygons in the data, which could lead to losses in some cases. We monitored the number of buildings before and after this stage to ensure that losses were minimal. For more details, see ${\tt input-dataset-metatable-v0.1.xlsx}$.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics{figs/valid.png}
+\caption{\textbf{Technical validation workflow}}
+\label{fig:valid}
+\end{figure}
+
+\subsection*{Wrong entries}
+
+Given the size of the dataset, there is a chance that incorrect entries exist in the upstream data or that edge cases caused the workflow to incorrectly parse the data. Here, we analyzed and monitored entries for correctness to avoid generating erroneous statistics or wrong inputs for modelling. We checked that polygons satisfy relevant geometric definitions to be meaningful building \textit{footprints}, and that \textit{attributes} take values in reasonable ranges or string sets (but did not delete unrealistic values).  
+
+We checked for invalid, empty and null \textit{geometries} during the initial parsing step and dropped them, see above. Our validation did not include the assessment of the precise positional accuracy of a building (e.g. the building should actually be one meter more to the north), or whether the building may have been demolished since the dataset's creation.
+
+\medskip \noindent \textit{Issue 6: Wrong geometry from reconstructing .gml files.} \hspace{0.1cm} Reconstructing \textit{footprint} polygons from $\tt{.gml}$ involved to identify and retrieve the correct elements of the xml-tree, in which a \textit{footprint} was often represented as several meshes (triangle polygon) that had to be assembled appropriately. This process was prone to errors as it was different between 2D and 3D \textit{geometries}, between semantically-labelled (e.g. wall, roof and ground surface) and non-semantically-labelled (e.g. \textit{solid} elements), and multiple edge cases had to be accounted for. For example, one dataset (Hamburg) was encoded as individual points wrapped as a mesh instead of having the mesh as the minimal geometry. Therefore, if a wrong reconstruction mode would be falsely selected the footprints may not be reconstructed correctly. To control for that, we checked for the number of invalid geometries after the initial parsing, compared it with the number of individual buildings in the raw file and parsed the dataset again when encountering errors.       
+
+\medskip \noindent \textit{Issue 7: Wrong geometry due to wrong projection.} \hspace{0.1cm} The projection of the \textit{geometries} could cause two issues in our workflow. First, because of an issue known as \textit{axis order confusion}: in some CRS, coordinates are written in the order $(X,Y)$ and in others $(Y,X)$, and sometimes it can even be the case across several versions of the same CRS \cite{reed2017}. For datasets provided as shapefile, this issue was handled directly by GeoPandas. But for the datasets in $\tt{.gml}$ that we reconstructed manually, we had to check for each dataset whether the reconstructed geometries would lie within the expected bounds. Second, in some rare cases reprojections from one CRS to another CRS in GeoPandas may lead to bugs which transformed coordinates to infinite values. We controlled for these cases by checking for invalid geometries. By matching the parsed data with GADM boundaries, we ensured that we projected correctly as a wrong projection would lead to 0 matches. We controlled for 0 matches using ${\tt city-level-overview-tables-v0.1.zip}$. 
+
+\subsection*{Duplicated entries}
+The last axis of the technical validation was to monitor duplicates. This step is important mainly to ensure that the building stock is not artificially inflated by buildings being present multiple times. It is also important to ensure the building identifiers are unique, in particular to ensure that table matching by ID can be performed safely. There are three main potential sources of duplicated buildings: from upstream errors in the raw data and from manipulations throughout the workflow. 
+
+\medskip \noindent \textit{Issue 8: Duplicated building in raw data.} \hspace{0.1cm}
+In rare cases, there could be duplicated entries in the original datasets. We tested for this by checking duplicates on both ID and geometry after the initial parsing, and dropped duplicates when present. 
+ 
+\medskip \noindent \textit{Issue 9: Duplication from file and data chunks manipulation.} \hspace{0.1cm}
+A number of datasets were provided as parts; in such occasions, there were risks that a part is read twice or, when the partitions were created, that some buildings at the end of the part and the beginning of another could be the same. Because some datasets were very large, we also read and saved the data in chunks to keep the memory requirements low throughout the workflow, creating another risk of duplicates. In both cases, we tested for duplicates on both ID and geometry after the initial parsing, and dropped duplicates when present.
+
+\medskip \noindent \textit{Issue 10: Duplication from administrative boundary matching.} \hspace{0.1cm} Many duplicates could be created when matching buildings with their administrative boundary by spatial join, based on the intersection between the footprint and boundary polygons. Because administrative boundaries fully fill the area of a country, there are also always adjacent boundaries except for isolated areas like islands. With the join being used, any building that sits on the boundary between two cities would be allocated to both cities. The alternative to keep only buildings within a city was not desirable as all such buildings would be dropped. To ensure that buildings were only present in one city and not duplicated, we calculated the area of intersection for all buildings located on an administrative boundary and allocated them to one city based on the maximum area of intersection. 
+
+\medskip \noindent \textit{Issue 11: Duplicated ID in raw data.} \hspace{0.1cm} Duplicates in the raw data may come from errors in the data creation, or also from our misinterpretation of an ID field in the data. Indeed, the selected variable may actually correspond to another identification scheme, e.g. at the district level. In some cases, a same ID may be given to several buildings for a given complex or address. To ensure we had only unique IDs, we checked for ID duplicates after the initial parsing. 
+
+If ID duplicates were detected, we first tested if the duplicates corresponded to independent buildings. If so, we added an ascending numbering as a suffix. In cases where a duplicated ID marked the same building with identical attributes, provided as several geometries as in Abruzzo (Italy), Piemonte (Italy) and Netherlands, we merge the building parts. In cases where a duplicated ID marked the same building is provided with several geometries and with varying height values per part as encountered in Flanders, Belgium, we merge the geometries and take the mean of the height values.     
+
+
+\section*{Usage Notes}
+To assist users in reusing this dataset for their project, we explain how to use the data provided and illustrate this with an example use case. We describe how to filter part of the data, summarize limitations that users should bare in mind and we point to options for users who may want to address some of these limitations by modifying our approach.   
+
+\subsection*{Practical considerations}
+Using the data likely involves loading buildings with a geospatial software, visualizing them e.g. as maps, computing metrics describing their characteristics, and conducting downstream analyses or modelling at different scales. We provide a tutorial for several of these aspects, see ${\tt getting\_started.pynb}$\cite{eubucco-0.1-code2022}.
+
+
+\medskip \noindent \textit{Potential scales of use.} \hspace{0.1cm}
+The availability of location information about city, region and country for each building enables to select data at different scales. The main goal of this work is to enable work at the scale of the European Union. Users aiming to perform any analysis at that scale can build a workflow to exploit all the data provided, likely by loading the data sequentially, given the volume. 
+Users may want to select a single city or region to conduct a local analysis. Finally, users could also choose to select a given subset of areas across different countries to perform comparative analyses.
+
+\medskip \noindent \textit{Loading the data.} \hspace{0.1cm}
+The data can be read by all main GIS software like PostGIS, QGIS or ArcGIS and by the geospatial libraries of the main programming language like Python or R. As  \textsc{eubucco} v0.1 is provided in tabular format with geometries as WKT strings, these need to decoded first. With QGIS, one should select ${\tt Layer > Add\ Layer > Add\ Delimited\ Text\ Layer}$ and then choose WKT as geometry definition and ETRS89 as CRS.
+
+\medskip \noindent \textit{Visualizing the data.} \hspace{0.1cm} 
+The data can be visualized through maps or by computing and plotting statistics of the \textit{attributes} or of derived metrics. A convenient way to visualize \textit{attributes} is to create choropleth maps, like on Fig.~\ref{fig:db_content}, that colors buildings with a color coding corresponding to attribute values. Building \textit{heights} can be extruded to visualize the dataset in 3D, e.g. using the open source framework Kepler \cite{kepler2021}. 
+
+\medskip \noindent \textit{Deriving metrics.} \hspace{0.1cm} 
+An interesting way to enhance the value of the data is to derive metrics that represent particular features of the buildings, individually or aggregated within a given distance or for a city. There are multiple off-the-shelf tools that enable computing various metrics easily. In Python, those include for example the libraries Momepy\cite{fleischmann2019momepy}, GeoPandas\cite{kelsey_jordahl_2019_2585849}, Shapely\cite{gillies_2021}, PySAL\cite{rey2010pysal}, OSMnx\cite{boeing2017osmnx}, etc. Refer to the documentation of these libraries for example of metrics and workflows.
+
+\subsection*{Example use case: Energy modelling} 
+A concrete example that illustrates how \textsc{eubucco} v0.1 can be used is building energy demand simulations. Energy models require inputs about building characteristics to make predictions about buildings energy demand: statistical models use them as predictive features, engineering models as input parameters. Our data can be used to compute relevant metrics such as the total floor area and the area of each wall for buildings that have a height value. Our data can also be matched with other datasets to derive further metrics e.g. the solar radiation received by a given wall using gridded climate data or thermal parameters by using the construction year attribute and building typologies datasets. In sum, there is a wide variety of metrics that can be computed from our data for the specific use case of energy modelling, but also for many other such as urban morphology, environmental risk assessment, micro-climate modelling, etc. 
+Building stock data can be used also for material stocks and flow assessments. For instance, Heeren and Hellweg use 2.5D data of Switzerland to determine the amount of construction material in buildings. That allows to determine the current stocks of construction material and anticipate future material flows and opportunities for circular economy. \cite{heeren2019tracking}
+
+
+\subsection*{Filtering options}
+Users may want to work with a subset of the data based on geography or satisfying certain conditions of homogeneity that are not met across the whole database. Specifically, users may choose to filter for:
+\begin{enumerate}[topsep=0.2pt]
+    \itemsep-0.15em 
+    \item Only specific countries, regions or cities. This can be done via selecting the relevant country or region file, or by using the ${\tt admin-codes-matches-v0.1.csv}$ file
+    \item Only areas with most liberal license, by selecting only the files licensed under ${\tt ODbL}$   
+    \item Only areas from government or OSM, by using the ${\tt admin-codes-matches-v0.1.csv}$ file
+    \item Only buildings with a given attribute. This can be done by dropping buildings with null values for the attribute.
+\end{enumerate}
+
+
+\subsection*{Remaining uncertainty}
+Users should be aware of the limitations of \textsc{eubucco} v0.1 and consider how these may affect the downstream analysis they plan to undertake. As described in several occasions in this document, our attempt was to gather the many fragmented datasets representing the EU building stock and perform minimal harmonization and cleaning to make these data easily usable for local, comparative and EU-level studies. Our attempt was not to perform a detailed assessment of the quality of each dataset nor to ensure its perfect homogeneity.
+It is complex to map all uncertainties and we leave it to the user to make their own final assessment of the reliability of a given dataset or variable beyond the partial evidence presented in this study.
+Below, we provide a summary of the main remaining sources of uncertainty that were not fully assessed in this study.  
+
+
+\begin{enumerate}[topsep=0.2pt]
+    \itemsep-0.15em 
+    \item The coverage of buildings may be far from 100\% in certain areas, in particular in rural areas where OSM was used in countries like Greece or Portugal. For example in Greece, we have $\sim$870 thousands buildings for a population of $\sim$10 million inhabitants in 2019\cite{un19} while we have $\sim1,9$ million buildings in Lithuania for $\sim 2,7$ million inhabitant in 2019\cite{un19}. This indicates that the coverage in Greece is likely too be overall very low.
+    \item Attribute values may contain outliers and values outside of realistic ranges e.g. for \textit{construction years} and \textit{heights} as we did not filter for those in \textsc{eubucco} v0.1.
+    \item The level of precision of \textit{attributes} (e.g. altimetric precision of the \textit{height}) may differ from a dataset to another. The uncertainty is likely to be higher overall in certain datasets than others, but the uncertainty can also be attribute-specific e.g. a dataset may have excellent \textit{types} but imprecise heights, and it can also be that within a datasets several sources of different qualities were merged.
+    \item The definition of a building (e.g. grouping or not of several constructions as one building or which types of constructions were included) may differ from a dataset to another.
+    \item Some buildings may be incorrectly represented, may not exist anymore or may exist but are lacking in \textsc{eubucco} v0.1.
+    \item Administrative boundaries may not represent the exact same notion of city or region across countries.  
+
+\end{enumerate}
+
+
+\subsection*{Reproducing the workflow from raw data}
+Our open-access code repository\cite{eubucco-0.1-code2022} and documentation enable users to reproduce our workflow to validate our results or to adapt it to their needs. In various cases, different approaches could be taken and some modelling choices were driven by our specific needs, in particular by the constraints of finding an approach that works across all datasets and that is not prohibitively time-intensive. Users may find other choices more appropriate for their use case, for example if they want to work only with a more homogeneous subset of the data. With the open-access repository, users can obtain source code for handling various steps when working with geospatial data, optimized for large-scale processing, low-memory requirements and fast runtime. 
+
+We welcome feedback or suggestions about the datasets present or possibly missing, and about the general approach; in particular, we welcome pull requests on Github. Users wishing to reproduce the study should note that while parsing many of the inputs datasets is possible on a standard laptop, certain steps can be highly memory- or time-intensive. Most of the data processing was undertaken using the Potsdam Institute for Climate Impact Research high-performance computing infrastructure, which provided high memory ressources and to parallelize parsing over a large number of CPUs.
+
+\section*{Code availability}
+
+All the code used in this study is available on Github: \url{https://github.com/ai4up/eubucco/releases/tag/v0.1} \cite{eubucco-0.1-code2022}. It is free to re-use and modify with attribution under the ${\tt MIT\ license}$.
+
+
+\bibliography{references.bib}
+
+
+\section*{Acknowledgements} 
+
+We thank Olaf Wysoki, Peter Berrill and Aicha Zekar for useful discussions. We also wish to thank our interlocutors from the geospatial data services of Emilia-Romagna, Finland, Slovenia, Slovakia, Tuscany, Liguria, Piemonte, Poland, Niedersachsen, Lithuania, Sachsen-Anhalt and Mecklenburg-Vorpommern  for helpful assistance in accessing and understanding their data. 
+
+
+\section*{Author contributions statement}
+
+\textbf{Conceptualization:} NMD, FW, FC
+
+\noindent \textbf{Methodology:} NMD, FW, NH 	
+
+\noindent \textbf{Software:} NMD, FW, FN	
+
+\noindent \textbf{Validation:} NMD, FW, JH, FN	
+
+\noindent \textbf{Formal analysis:} NMD, FW, JH, FN	
+
+\noindent \textbf{Investigation:} NMD, FW, JH, FN
+
+\noindent \textbf{Data Curation:} NMD, FW, JH, MZ, FN
+
+\noindent \textbf{Writing – original draft preparation:} NMD, FW	
+
+\noindent \textbf{Writing – review and editing:} all authors  
+
+\noindent \textbf{Visualization:} NMD	
+
+\noindent \textbf{Supervision:} FC
+
+
+\section*{Competing interests}
+
+We declare no competing interests.
+
+\end{document}
