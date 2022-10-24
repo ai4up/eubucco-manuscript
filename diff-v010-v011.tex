@@ -1,33 +1,59 @@
 \documentclass[fleqn,10pt]{wlscirep}
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL main-v01-12052022.tex   Mon Oct 24 10:59:44 2022
+%DIF ADD main.tex                Mon Oct 24 11:19:38 2022
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lineno}
 \usepackage{graphicx}
 \linenumbers
 
- \title{EUBUCCO v0.1: European building stock characteristics in a common and open database for 200+ million individual buildings}
+%DIF 8c8
+%DIF <  \title{EUBUCCO: European building stock characteristics in a common and open database for 206 million individual buildings}
+%DIF -------
+ \title{EUBUCCO v0.1: European building stock characteristics in a common and open database for 200+ million individual buildings} %DIF > 
+%DIF -------
 
 \author[1,2$\dag$,*]{Nikola Milojevic-Dupont}
 \author[1,2,$\dag$*]{Felix Wagner}
+%DIF 12-13d12
+%DIF < \author[1,2]{Jiawei Hu}
+%DIF < \author[2,3]{Marius Zumwald}
+%DIF -------
 \author[1,2]{Florian Nachtigall}
-\author[1,2]{Jiawei Hu}
-\author[3]{Geza Boi Brüser}
-\author[2,4]{Marius Zumwald}
-\author[5]{Filip Biljecki}
-\author[6]{Niko Heeren}
-\author[7]{Lynn H. Kaack}
-\author[8]{Peter-Paul Pichler}
+%DIF 15-18c13-19
+%DIF < \author[4]{Filip Biljecki}
+%DIF < \author[5]{Niko Heeren}
+%DIF < \author[6]{Lynn H. Kaack}
+%DIF < \author[7]{Peter-Paul Pichler}
+%DIF -------
+\author[1,2]{Jiawei Hu} %DIF > 
+\author[3]{Geza Boi Brüser} %DIF > 
+\author[2,4]{Marius Zumwald} %DIF > 
+\author[5]{Filip Biljecki} %DIF > 
+\author[6]{Niko Heeren} %DIF > 
+\author[7]{Lynn H. Kaack} %DIF > 
+\author[8]{Peter-Paul Pichler} %DIF > 
+%DIF -------
 \author[1,2]{Felix Creutzig}
 
 
 \affil[1]{Mercator Research Institute of Global Commons and Climate Change, Berlin, 10829, Germany}
 \affil[2]{Technical University Berlin, Berlin, 10623, Germany}
-\affil[3]{Independent researcher, Berlin, 12053, Germany}
-\affil[4]{ETH Z\"urich, Institute for Environmental Decisions, Z\"urich, 8092, Switzerland}
-\affil[5]{National University of Singapore, Singapore, 119077, Singapore}
-\affil[6]{Norwegian University of Science and Technology (NTNU), Trondheim, 7491, Norway}
-\affil[7]{Hertie School, Data Science Lab, Berlin, 10117, Germany}
-\affil[8]{Potsdam Institute for Climate Impact Research (PIK), Potsdam, 14473, Germany}
+%DIF 24-28c25-30
+%DIF < \affil[3]{ETH Zurich, Institute for Environmental Decisions, Switzerland}
+%DIF < \affil[4]{National University of Singapore, Singapore, 119077, Singapore}
+%DIF < \affil[5]{Norwegian University of Science and Technology (NTNU), Trondheim, 7491, Norway}
+%DIF < \affil[6]{Hertie School, Data Science Lab, Berlin, 10117, Germany}
+%DIF < \affil[7]{Potsdam Institute for Climate Impact Research (PIK), Potsdam, 14473, Germany}
+%DIF -------
+\affil[3]{Independent researcher, Berlin, 12053, Germany} %DIF > 
+\affil[4]{ETH Z\"urich, Institute for Environmental Decisions, Z\"urich, 8092, Switzerland} %DIF > 
+\affil[5]{National University of Singapore, Singapore, 119077, Singapore} %DIF > 
+\affil[6]{Norwegian University of Science and Technology (NTNU), Trondheim, 7491, Norway} %DIF > 
+\affil[7]{Hertie School, Data Science Lab, Berlin, 10117, Germany} %DIF > 
+\affil[8]{Potsdam Institute for Climate Impact Research (PIK), Potsdam, 14473, Germany} %DIF > 
+%DIF -------
 
 \affil[*]{corresponding authors: Nikola Milojevic-Dupont (milojevic@mcc-berlin.net), Felix Wagner (wagner@mcc-berlin.net)} 
 \affil[$\dag$]{these authors contributed equally to this work}
@@ -37,10 +63,93 @@
 Building stock management is becoming a global societal and political issue, inter alia because of growing sustainability concerns.
 Comprehensive and openly accessible building stock data can enable impactful research exploring the most effective policy options.
 In Europe, efforts from citizen and governments generated numerous relevant datasets but these are fragmented and heterogeneous, thus hindering their usability.
-Here, we present \textsc{eubucco} v0.1, a database of individual building footprints for $\sim$ 202 million buildings across the 27 European Union countries and Switzerland. Three main \textit{attributes} -- building type, height and construction year -- are included for respectively 45\%, 74\%, 24\% of the buildings.
+%DIF 38c40
+%DIF < Here, we present \textsc{eubucco} v0.1, a database of individual building footprints for $\sim$ 206 million buildings across the 27 European Union countries and Switzerland. Three main \textit{attributes} -- building type, height and construction year -- are included for respectively 45\%, 74\%, 24\% of the buildings.
+%DIF -------
+Here, we present \textsc{eubucco} v0.1, a database of individual building footprints for $\sim$ 202 million buildings across the 27 European Union countries and Switzerland. Three main \textit{attributes} -- building type, height and construction year -- are included for respectively 45\%, 74\%, 24\% of the buildings. %DIF > 
+%DIF -------
 We identify, collect and harmonize 50 open government datasets and OpenStreetMap, and perform extensive validation analyses to assess the quality, consistency and completeness of the data in every country.
 \textsc{eubucco} v0.1 provides the basis for high-resolution urban sustainability studies across scales -- continental, comparative or local studies --  using a centralized source and is relevant for a variety of use cases, e.g. for energy system analysis or natural hazard risk assessments.
 \end{abstract}
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+\newcommand{\DIFscaledelfig}{0.5}
+%DIF HIGHLIGHTGRAPHICS PREAMBLE %DIF PREAMBLE
+\RequirePackage{settobox} %DIF PREAMBLE
+\RequirePackage{letltxmacro} %DIF PREAMBLE
+\newsavebox{\DIFdelgraphicsbox} %DIF PREAMBLE
+\newlength{\DIFdelgraphicswidth} %DIF PREAMBLE
+\newlength{\DIFdelgraphicsheight} %DIF PREAMBLE
+% store original definition of \includegraphics %DIF PREAMBLE
+\LetLtxMacro{\DIFOincludegraphics}{\includegraphics} %DIF PREAMBLE
+\newcommand{\DIFaddincludegraphics}[2][]{{\color{blue}\fbox{\DIFOincludegraphics[#1]{#2}}}} %DIF PREAMBLE
+\newcommand{\DIFdelincludegraphics}[2][]{% %DIF PREAMBLE
+\sbox{\DIFdelgraphicsbox}{\DIFOincludegraphics[#1]{#2}}% %DIF PREAMBLE
+\settoboxwidth{\DIFdelgraphicswidth}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\settoboxtotalheight{\DIFdelgraphicsheight}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\scalebox{\DIFscaledelfig}{% %DIF PREAMBLE
+\parbox[b]{\DIFdelgraphicswidth}{\usebox{\DIFdelgraphicsbox}\\[-\baselineskip] \rule{\DIFdelgraphicswidth}{0em}}\llap{\resizebox{\DIFdelgraphicswidth}{\DIFdelgraphicsheight}{% %DIF PREAMBLE
+\setlength{\unitlength}{\DIFdelgraphicswidth}% %DIF PREAMBLE
+\begin{picture}(1,1)% %DIF PREAMBLE
+\thicklines\linethickness{2pt} %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\framebox(1,1){}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\line( 1,1){1}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,1){\line(1,-1){1}}}% %DIF PREAMBLE
+\end{picture}% %DIF PREAMBLE
+}\hspace*{3pt}}} %DIF PREAMBLE
+} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbegin}{\DIFaddbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddend}{\DIFaddend} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbegin}{\DIFdelbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelend}{\DIFdelend} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbegin}{\DIFOaddbegin \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbegin}{\DIFOdelbegin \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbeginFL}{\DIFaddbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddendFL}{\DIFaddendFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbeginFL}{\DIFdelbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelendFL}{\DIFdelendFL} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbeginFL}{\DIFOaddbeginFL \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbeginFL}{\DIFOdelbeginFL \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+%DIF LISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
 \begin{document}
 
 \flushbottom
@@ -63,12 +172,16 @@ Europe is currently the world region with the richest open building stock data, 
 OpenStreetMap (OSM) provides the only single database for all EU countries, based on the contributions of millions of mappers \cite{haklay2008openstreetmap,mooney2017review,sarretta2021towards}. However, OSM has quality issues such as a varying coverage, an inconsistent description, and lack of \textit{attributes} \cite{sarretta2021towards,biljecki2021open}. 
 Therefore, there is a need to identify available data, assess their quality, and aggregate the best existing datasets to create a complete building database for Europe. Such centralized database can amplify the value of individual datasets by unlocking novel research opportunities across scales\cite{seto2017sustainability,elmqvist2021urbanization,creutzig2015towards,milojevic2021machine}, including comparative studies such as city typologies \cite{creutzig2015towards} and unprecedented continental-level studies. 
 
-Here, we present \textsc{eubucco} v0.1\cite{eubucco_v0.1_2022_dataset}, a database of individual buildings covering all 27 EU countries and Switzerland, which represent 378 regions and $40,829$ cities. \textsc{eubucco} v0.1 contains building \textit{footprints} for  $\sim$ 202 million buildings and three main building \textit{attributes} --  \textit{height}, \textit{type} and \textit{construction year} -- for respectively 74\%, 40\% and 24\% of the buildings, see Table~\ref{tab:country stats} for country-level values.
+Here, we present \textsc{eubucco} v0.1\cite{eubucco_v0.1_2022_dataset}, a database of individual buildings covering all 27 EU countries and Switzerland, which represent 378 regions and $40,829$ cities. \textsc{eubucco} v0.1 contains building \textit{footprints} for  $\sim$ \DIFdelbegin \DIFdel{206 }\DIFdelend \DIFaddbegin \DIFadd{202 }\DIFaddend million buildings and three main building \textit{attributes} --  \textit{height}, \textit{type} and \textit{construction year} -- for respectively 74\%, 40\% and 24\% of the buildings, see Table~\ref{tab:country stats} for country-level values.
 Our input datasets include 50 heterogeneous open government datasets and OSM, see Fig.~\ref{fig:intro_fig}. 
 Our workflow involve three steps. First, we identified candidate datasets. Second, we retrieved data involving negotiation, web scraping, and various APIs. Third, we harmonized the data to make \textit{geometries} and \textit{attributes} comparable. The last step also involved introducing a consistent administrative sub-division scheme that underpins the database structure.
 Finally, we performed extensive validation to monitor data coverage and quality throughout our workflow.
 
-\textsc{eubucco} v0.1 gathers timely information for high-resolution analysis of the EU building stock, which is highly relevant for policy making on the EU, national and city level, urban planning as well as academic research. By identifying and assessing the relevance of various datasets, we enable users to easily find and access data across the EU. By collecting, harmonizing, cleaning and redistributing all the data through a simple download approach, we ensure a high usability. The data is available on the dedicated website \url{eubucco.com} and referenced on Zenodo\cite{eubucco_v0.1_2022_dataset} (concept DOI: \url{doi.org/10.5281/zenodo.6524780}, v0.1-specific DOI \url{doi.org/10.5281/zenodo.7225259}). The code used to generate the database is provided as a Github repository\cite{eubucco-0.1-code2022}, with tags that correspond to a specific version e.g. v0.1 together with the documentation of all input data to enable transparent re-use, verification, update and modification. This database is therefore reproducible, i.e.\ the code allows to recreate the repository with little manual intervention.
+\textsc{eubucco} v0.1 gathers timely information for high-resolution analysis of the EU building stock, which is highly relevant for policy making on the EU, national and city level, urban planning as well as academic research. By identifying and assessing the relevance of various datasets, we enable users to easily find and access data across the EU. By collecting, harmonizing, cleaning and redistributing all the data through a simple download approach, we ensure a high usability. The data is available on \DIFdelbegin \DIFdel{Zenodo\mbox{%DIFAUXCMD
+\cite{eubucco_v0.1_2022_dataset}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{the dedicated website }\url{eubucco.com} \DIFadd{and referenced on Zenodo\mbox{%DIFAUXCMD
+\cite{eubucco_v0.1_2022_dataset} }\hspace{0pt}%DIFAUXCMD
+(concept DOI: }\url{doi.org/10.5281/zenodo.6524780}\DIFadd{, v0.1-specific DOI }\url{doi.org/10.5281/zenodo.7225259}\DIFadd{)}\DIFaddend . The code used to generate the database is provided as a Github repository\cite{eubucco-0.1-code2022}\DIFaddbegin \DIFadd{, with tags that correspond to a specific version e.g. v0.1 }\DIFaddend together with the documentation of all input data to enable transparent re-use, verification, update and modification. This database is therefore reproducible, i.e.\ the code allows to recreate the repository with little manual intervention.
 
 
 \begin{table}[h!]
@@ -79,35 +192,41 @@ Finally, we performed extensive validation to monitor data coverage and quality 
 \textbf{Country} &   \textbf{Buildings [\textit{n}]}  &  \textbf{Footprint area [m\textsuperscript{2}]} &  \textbf{Heights [\%]} &  \textbf{Ages [\%]} &  \textbf{Types [\%]} \\
 \midrule
 Germany     & $43,644,887$ &  $6,108,343,562$ &      66 &   0 &    66 \\
-France      &  $47,847,462$ &  $5,851,128,661$ &      98 &   45 &    54 \\
+France      &  \DIFdelbeginFL \DIFdelFL{$47,847,810$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$47,847,462$ }\DIFaddendFL &  \DIFdelbeginFL \DIFdelFL{$5,851,322,659$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$5,851,128,661$ }\DIFaddendFL &      98 &   45 &    54 \\
 Italy       &  $20,674,153$ &  $3,668,104,389$ &      69 &   7 &    50 \\
-Spain       &  $16,340,067$ &  $2,979,509,619$ &      95 &   99 &    100 \\
+Spain       &  \DIFdelbeginFL \DIFdelFL{$16,584,609$ }%DIFDELCMD < &  %%%
+\DIFdelFL{$3,095,106,421$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$16,340,067$ }\DIFaddendFL &  \DIFdelbeginFL \DIFdelFL{93 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$2,979,509,619$ }\DIFaddendFL &      \DIFdelbeginFL \DIFdelFL{98 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{95 }\DIFaddendFL &   99 \DIFaddbeginFL &    \DIFaddFL{100 }\DIFaddendFL \\
 Poland      &  $14,404,767$ &  $2,099,046,447$ &      100 &   0 &    0 \\
-Netherlands &   $9,692,657$ &  $1,202,665,089$ &      100 &   100 &    0 \\
-Belgium     &  $8,634,500$ &  $1,096,372,592$ &      100 &   0 &    0 \\
+\DIFdelbeginFL \DIFdelFL{Belgium     }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Netherlands }\DIFaddendFL &   \DIFdelbeginFL \DIFdelFL{$11,945,733$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$9,692,657$ }\DIFaddendFL &  \DIFdelbeginFL \DIFdelFL{$1,572,052,878$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$1,202,665,089$ }\DIFaddendFL &      100 &   \DIFdelbeginFL \DIFdelFL{0 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{100 }\DIFaddendFL &    0 \\
+\DIFdelbeginFL \DIFdelFL{Netherlands }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{Belgium     }\DIFaddendFL &  \DIFdelbeginFL \DIFdelFL{$9,692,657$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$8,634,500$ }\DIFaddendFL &  \DIFdelbeginFL \DIFdelFL{$1,202,665,088$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$1,096,372,592$ }\DIFaddendFL &      100 &   \DIFdelbeginFL \DIFdelFL{100 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{0 }\DIFaddendFL &    0 \\
 Austria     &   $4,135,733$ &    $867,271,697$ &      7 &   0 &    16 \\
-Denmark     &   $5,691,756$ &    $738,533,831$ &      0 &   0 &    0 \\
-Finland     &   $5,370,223$ &    $691,145,893$ &      2 &   1 &    1 \\
+Denmark     &   $5,691,756$ &    \DIFdelbeginFL \DIFdelFL{$738,533,830$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$738,533,831$ }\DIFaddendFL &      0 &   0 &    0 \\
+Finland     &   $5,370,223$ &    \DIFdelbeginFL \DIFdelFL{$691,145,892$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$691,145,893$ }\DIFaddendFL &      2 &   1 &    1 \\
 Czechia     &   $4,044,659$ &    $673,376,186$ &      8 &   0 &    92 \\
-Sweden      &   $2,532,313$ &    $568,473,803$ &      3 &   0 &    27 \\
-Switzerland &   $2,641,571$ &    $506,395,304$ &      100 &   0 &    0 \\
+Sweden      &   $2,532,313$ &    \DIFdelbeginFL \DIFdelFL{$568,473,802$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$568,473,803$ }\DIFaddendFL &      3 &   0 &    27 \\
+Switzerland &   \DIFdelbeginFL \DIFdelFL{$2,641,582$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$2,641,571$ }\DIFaddendFL &    \DIFdelbeginFL \DIFdelFL{$506,401,558$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$506,395,304$ }\DIFaddendFL &      100 &   0 &    0 \\
 Slovakia    &   $3,488,125$ &    $428,026,555$ &      95 &   0 &    87 \\
 Hungary     &   $1,546,359$ &    $337,332,876$ &      3 &   0 &    33 \\
 Portugal    &   $1,215,018$ &    $325,743,275$ &      4 &   0 &    32 \\
 Romania     &   $1,332,570$ &    $323,929,666$ &      7 &   0 &    21 \\
 Lithuania   &   $1,924,431$ &    $290,400,677$ &      0 &   0 &    0 \\
-Ireland     &   $1,610,614$ &    $243,282,004$ &      13 &   0 &    67 \\
+Ireland     &   $1,610,614$ &    \DIFdelbeginFL \DIFdelFL{$243,282,003$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$243,282,004$ }\DIFaddendFL &      13 &   0 &    67 \\
 Greece      &     $864,237$ &    $187,420,816$ &      5 &   0 &    13 \\
-Slovenia    &   $1,162,832$ &    $182,617,285$ &      94 &   0 &    19 \\
+Slovenia    &   $1,162,832$ &    \DIFdelbeginFL \DIFdelFL{$182,617,284$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$182,617,285$ }\DIFaddendFL &      94 &   0 &    19 \\
 Croatia     &     $873,080$ &    $147,590,430$ &      1 &   0 &    19 \\
 Bulgaria    &     $448,470$ &    $145,130,155$ &      15 &   0 &    35 \\
 Estonia     &     $803,218$ &    $132,899,346$ &      100 &   0 &    0 \\
-Latvia      &     $513,316$ &    $112,759,248$ &      6 &   0 &    17 \\
-Cyprus      &     $467,594$ &     $74,417,048$ &      100 &   0 &    0 \\
-Luxembourg  &     $143,923$ &     $43,143,729$ &      100 &   0 &    0 \\
+Latvia      &     $513,316$ &    \DIFdelbeginFL \DIFdelFL{$112,759,247$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$112,759,248$ }\DIFaddendFL &      6 &   0 &    17 \\
+Cyprus      &     $467,594$ &     \DIFdelbeginFL \DIFdelFL{$74,417,047$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$74,417,048$ }\DIFaddendFL &      100 &   0 &    0 \\
+Luxembourg  &     $143,923$ &     \DIFdelbeginFL \DIFdelFL{$43,143,728$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$43,143,729$ }\DIFaddendFL &      100 &   0 &    0 \\
 Malta   &     	  $142,616$ & 	  $32,599,347$ &  	100 &	0 &	0 \\
 \midrule
-\textbf{Total}       & \textbf{202,\thinspace191,\thinspace151} & \textbf{30,\thinspace057,\thinspace659,\thinspace533} &      \textbf{73 \%} &   \textbf{24 \%} &    \textbf{46 \%}\\
+\textbf{Total}       & \textbf{\DIFdelbeginFL \DIFdelFL{205}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{202}\DIFaddendFL ,\DIFdelbeginFL %DIFDELCMD < \thinspace747%%%
+\DIFdelendFL \DIFaddbeginFL \thinspace191\DIFaddendFL ,\DIFdelbeginFL %DIFDELCMD < \thinspace285%%%
+\DIFdelendFL \DIFaddbeginFL \thinspace151\DIFaddendFL } & \textbf{30,\DIFdelbeginFL %DIFDELCMD < \thinspace649%%%
+\DIFdelendFL \DIFaddbeginFL \thinspace057\DIFaddendFL ,\DIFdelbeginFL %DIFDELCMD < \thinspace136%%%
+\DIFdelendFL \DIFaddbeginFL \thinspace659\DIFaddendFL ,\DIFdelbeginFL %DIFDELCMD < \thinspace862%%%
+\DIFdelendFL \DIFaddbeginFL \thinspace533\DIFaddendFL } &      \textbf{\DIFdelbeginFL \DIFdelFL{74 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{73 }\DIFaddendFL \%} &   \textbf{24 \%} &    \textbf{\DIFdelbeginFL \DIFdelFL{45 }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{46 }\DIFaddendFL \%}\\
 \bottomrule
 \end{tabular}
 \caption{\label{tab:country stats} \textbf{Country-level content statistics of \textsc{eubucco} v0.1.} Values correspond to the final counts from the final provided as the database at the end of pipeline, and do not account for the buildings that were dropped throughout the workflow. The values for \textit{height}, \textit{construction years} and \textit{types} correspond to the percentage of buildings for which the attribute is available in \textsc{eubucco} v0.1. Countries are ordered by descending total building footprint area.}
@@ -168,14 +287,20 @@ A large heterogeneity exists in term of download services for government dataset
 Datasets are provided either as one file, multiple files corresponding to smaller administrative areas or tiles, and sometimes several levels of aggregation are available. If the data could be downloaded from a government portal via few single links or queried generating download links via email, the download was conducted manually.
 
 In cases where a high number of links were present or a complex and time consuming download procedure was required, we used Python web scraping tools to automatically download the data, see ${\tt database/preprocessing/0-downloading}$\cite{eubucco-0.1-code2022}. 
-We developed specific download workflows for 10 different websites, building up on the web scraping packages Selenium \cite{selenium_2022}.
+We developed specific download workflows for 10 different websites, building up on the web scraping packages Selenium \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{selenium_2022}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend .
 
 In a few cases, we downloaded the data via APIs or transfer protocols, including WFS, OGC API, and FTP. When datasets where available as ATOM feeds, we used web scrappers instead of browser-based clients. 
 In three cases, the datasets were only available via a selection tool on an interactive map with low limits per query, making the manual download of the whole area virtually impossible. In such cases, we contacted the data owner to ask for a data dump, which they did provide in the cases of Emilia-Romagna and Piemonte, while Niedersachsen provided a url to a list of download links.  
 
 \subsubsection*{OpenStreetMap}
 
-OSM data was downloaded as $\tt{.pbf}$ files from the Geofabrik download server \cite{geofabrik_2018} using the Python library Pyrosm \cite{pyrosm_2021}, either at the country level or region level for large countries large Germany and Italy where regional downloads are possible. The retrieval of buildings from OSM $\tt{.pbf}$ files was done via filtering per tags (which is similar to an attribute column). 
+OSM data was downloaded as $\tt{.pbf}$ files from the Geofabrik download server \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{geofabrik_2018} }\hspace{0pt}%DIFAUXCMD
+}\DIFaddend using the Python library Pyrosm \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{pyrosm_2021}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend , either at the country level or region level for large countries large Germany and Italy where regional downloads are possible. The retrieval of buildings from OSM $\tt{.pbf}$ files was done via filtering per tags (which is similar to an attribute column). 
 
 There were two main challenges while filtering: 1) in a $\tt{.pbf}$, buildings are not separated from other polygons (e.g. land use) as specific datasets, 2) tag values that can be used for filtering are noisy and incomplete, as OSM mappers are free to use any value of their choice including none. We followed the most common approach, which is to request any non-null value in the $\tt{building}$ tag/column using a wildcard: $\tt{building=*}$. Most values in this column are either $\tt{yes}$ or indicate the type of the building e.g. $\tt{house}$ or $\tt{commercial}$. A small share of buildings may not have a value in this column and are lost, but adding any other tag e.g. $\tt{building:use=* \ OR \ amenity=*}$ without requiring a value for the building tag, led to the inclusion of non-building polygons e.g. district boundary or land use polygons. These would then need to be excluded, which is not trivial. Our approach is conservative in the sense that it prevents true negatives while false positives could only arise from erroneous $\tt{building}$ tag values, which are expected to be very few.     
 
@@ -192,11 +317,20 @@ We transformed the retrieved files and harmonized the file formats, the \textit{
 
 \subsubsection*{File formats}
 
-We encountered seven different file formats (see ${\tt input-dataset-metatable-v0.1.xlsx}$), which we all converted into a single format, see Data Records section. All the file format conversion code and instructions can be found in the repository under $\tt{/database/preprocessing/1-parsing}$ and in the module $\tt{preproc.parsing.py}$ \cite{eubucco-0.1-code2022}. 
+We encountered seven different file formats (see ${\tt input-dataset-metatable-v0.1.xlsx}$), which we all converted into \DIFdelbegin \DIFdel{the $\tt{.csv}$ format -- a simple, versatile and universally supported tabular file format. The main drawback of $\tt{.csv}$ is that it does not natively support spatial objects. We used the well-known text (WKT) encoding to write building }\textit{\DIFdel{geometries}} %DIFAUXCMD
+\DIFdel{into a string, an approach used for example by Google AI's Africa Open Building dataset \mbox{%DIFAUXCMD
+\cite{sirko2021continental}}\hspace{0pt}%DIFAUXCMD
+. Our $\tt{.csv}$ files then contain all }\textit{\DIFdel{attributes}} %DIFAUXCMD
+\DIFdel{and }\textit{\DIFdel{geometries}} %DIFAUXCMD
+\DIFdel{as columns of a dataframe}\DIFdelend \DIFaddbegin \DIFadd{a single format, see Data Records section}\DIFaddend . All the file format conversion code and instructions can be found in the repository under $\tt{/database/preprocessing/1-parsing}$ and in the module $\tt{preproc.parsing.py}$ \cite{eubucco-0.1-code2022}. 
 
 Parsing $\tt{.gml}$ and $\tt{.xml}$ files was made complex by the little support for these formats in high-level Python libraries or desktop GIS tools. In addition, despite the existence of standards for $\tt{.gml}$ encoding, almost all datasets had specificities in the way they named relevant elements (the basic building blocks of a XML-type document used as a container to store information, thus requiring a versatile parser. We developed our own parser that retrieves, from any of the $\tt{.gml}$ and $\tt{.xml}$ files encountered, building \textit{footprint geometries}, IDs and \textit{attributes} of interest (see code repository\cite{eubucco-0.1-code2022}, in the module $\tt{preproc.parsing.py}$). 
 
-Next to $\tt{.gml}$ and $\tt{.xml}$, the parser also handles shapefiles ($\tt{.shp}$) and OSM's $\tt{.pbf}$ files by directly reading in \textit{geometries}, IDs and \textit{attributes} using the Python library GeoPandas\cite{kelsey_jordahl_2020_3946761}. For a few files, \textit{attributes} were given as separate tabular files ($\tt{.csv}$ or $\tt{.dbf}$), which we matched to the building \textit{geometries} by ID. Finally, a few files were available as $\tt{.SQL}$ or $\tt{.sqlite}$ files or database dumps, which we parsed using PostGIS.
+Next to $\tt{.gml}$ and $\tt{.xml}$, the parser also handles shapefiles ($\tt{.shp}$) and OSM's $\tt{.pbf}$ files by directly reading in \textit{geometries}, IDs and \textit{attributes} using the Python library GeoPandas\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\cite{kelsey_jordahl_2019_2585849}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{kelsey_jordahl_2020_3946761}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend . For a few files, \textit{attributes} were given as separate tabular files ($\tt{.csv}$ or $\tt{.dbf}$), which we matched to the building \textit{geometries} by ID. Finally, a few files were available as $\tt{.SQL}$ or $\tt{.sqlite}$ files or database dumps, which we parsed using PostGIS.
 
 
 \subsubsection*{Geometries} Harmonizing \textit{geometries} included three main parts: extracting a \textit{footprint} polygon for each building geometry, reprojecting to a single coordinate reference system (CRS) and cleaning the \textit{footprint geometries}.
@@ -219,7 +353,11 @@ We harmonized values for the three \textit{attributes} of interest (\textit{heig
 
 \medskip \noindent \textit{Heights.} \hspace{0.1cm} For buildings \textit{heights}, it was not possible to fully harmonize values with one definition, so we used mixed definitions that are transparently documented in ${\tt input-dataset-metatable-v0.1.xlsx}$. Indeed, datasets do not all come with the same level of detail and sometimes do not state which height definition is used. The \textit{height} of a building is most commonly defined as the difference between the ground and the highest point of the construction (which can be a chimney), the highest or the lowest point of the roof main structure e.g. the eaves, or as a percentile of the point cloud generated by the aerial sensing of the building \cite{peters2021automated}. Those definitions may be similar in case of a flat roof, but possibly lead to large differences in case of steep pitched roofs. Future iterations of the \textsc{eubucco} would ideally contain a roof type, inclination, orientation, and a estimation of the difference between lowest and highest roof point \cite{zhang2022vectorized}.    
 
-To retrieve building \textit{heights} from the datasets, we either parsed them directly as a single value when available as a $\tt{.gml}$ element or as a column in a tabular file, computed them as the difference between two values such as ground and maximum building elevation when only such information was provided, or computed them directly using 3D \textit{geometries}. When possible, for example in the case of LoD2 models with semantic information on roof elements, we favored the definition using the lowest point of the roof structure, as it has the most relevant interpretation for use cases interested in estimating living space, e.g. building energy demand models, which we decide to favor in this version. Users interested in other height definitions can modify this aspect in the parser. In cases where only floor information was available, in Spain, Cyprus and for many OSM buildings, we multiplied the number of floors by a floor height of 2.5 m. This fixed value should only be considered as a proxy given that floor height (including the floor-to-ceiling height and additional thickness of the ceiling construction) varies across buildings typically between 2.5 and 4 m \cite{biljecki2017generating,usui2022comparison}. It is likely to be an underestimation of the actual height in many cases. The value here also does not include potential roof height and should be interpreted as ground-to-eaves height. Future versions of this database will aim to improve on this aspect.
+To retrieve building \textit{heights} from the datasets, we either parsed them directly as a single value when available as a $\tt{.gml}$ element or as a column in a tabular file, computed them as the difference between two values such as ground and maximum building elevation when only such information was provided, or computed them directly using 3D \textit{geometries}. When possible, for example in the case of LoD2 models with semantic information on roof elements, we favored the definition using the lowest point of the roof structure, as it has the most relevant interpretation for use cases interested in estimating living space, e.g. building energy demand models, which we decide to favor in this version. Users interested in other height definitions can modify this aspect in the parser. In cases where only floor information was available, in Spain, Cyprus and for many OSM buildings, we multiplied the number of floors by \DIFdelbegin \DIFdel{an }\DIFdelend \DIFaddbegin \DIFadd{a }\DIFaddend floor height of 2.5 m\DIFdelbegin \DIFdel{-- the minimum }\DIFdelend \DIFaddbegin \DIFadd{. This fixed value should only be considered as a proxy given that floor height (including the }\DIFaddend floor-to-ceiling \DIFdelbegin \DIFdel{requirement in several European countries\mbox{%DIFAUXCMD
+\cite{milojevic2020learning}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{height and additional thickness of the ceiling construction) varies across buildings typically between 2.5 and 4 m \mbox{%DIFAUXCMD
+\cite{biljecki2017generating,usui2022comparison}}\hspace{0pt}%DIFAUXCMD
+. It is likely to be an underestimation of the actual height in many cases. The value here also does not include potential roof height and should be interpreted as ground-to-eaves height. Future versions of this database will aim to improve on this aspect}\DIFaddend .
 
 \medskip \noindent \textit{Types.} \hspace{0.1cm} Building \textit{types} also came with different levels of detail across countries; therefore, to harmonize \textit{types} while conserving the original level of detail, we used two \textit{type} \textit{attributes}: $\tt{type\_source}$ (the \textit{type} in the original dataset) and $\tt{type}$ (harmonized \textit{types}). For the harmonized \textit{types}, we classified buildings into two groups, residential and non-residential, as this was the simplest, yet a valuable distinction that can be made. 
 
@@ -254,32 +392,43 @@ The datasets included on the repository that are not licensed under ${\tt ODbL}$
 
 \section*{Data Records}
 
-\textsc{eubucco} v0.1 \cite{eubucco_v0.1_2022_dataset} contains $202, 191, 151$ individual buildings each corresponding to an entry / row. The database covers 28 European countries -- all the EU countries and Switzerland, see Table~\ref{tab:country stats} for the complete country list --, and contains buildings in 378 regions and $40,829$ cities. In addition to the main files containing building-level data, we provide additional tables that either provide information on the database content or enable to match additional attributes to the buildings. The dataset is available as 32 files on \url{eubucco.com} and referenced on Zenodo (concept DOI: \url{doi.org/10.5281/zenodo.6524780}, v0.1-specific DOI \url{doi.org/10.5281/zenodo.7225259}). There are 28 country ${\tt .zip}$ files for the data distributed under ${\tt ODbL}$, 2 ${\tt .zip}$ files for the areas distributed under a different license, one ${\tt .zip}$ for additional files and a license file.
+\textsc{eubucco} v0.1 \cite{eubucco_v0.1_2022_dataset} contains \DIFdelbegin \DIFdel{$205, 747, 285$ }\DIFdelend \DIFaddbegin \DIFadd{$202, 191, 151$ }\DIFaddend individual buildings each corresponding to an entry / row. The database covers 28 European countries -- all the EU countries and Switzerland, see Table~\ref{tab:country stats} for the complete country list --, and contains buildings in 378 regions and $40,829$ cities. In addition to the main files containing building-level data, we provide additional tables that either provide information on the database content or enable to match additional attributes to the buildings. The dataset is available as 32 files on \DIFdelbegin \DIFdel{Zenodo  (}%DIFDELCMD < \url{https://zenodo.org/record/6524781#.YnzKDlxBygp}%%%
+\DIFdel{): 27 }\DIFdelend \DIFaddbegin \url{eubucco.com} \DIFadd{and referenced on Zenodo (concept DOI: }\url{doi.org/10.5281/zenodo.6524780}\DIFadd{, v0.1-specific DOI }\url{doi.org/10.5281/zenodo.7225259}\DIFadd{). There are 28 }\DIFaddend country ${\tt .zip}$ files for the data distributed under ${\tt ODbL}$, 2 \DIFaddbegin \DIFadd{${\tt .zip}$ }\DIFaddend files for the areas distributed under a different license, one ${\tt .zip}$ for additional files and a license file.
 
 \subsection*{Main files}
+\DIFdelbegin \DIFdel{The main files are provided in tabular format }\DIFdelend \DIFaddbegin 
 
-The core data  are available as $30 \times 2$ $\tt{.zip}$ files containing either all columns including the geometry as $\tt{.gpkg}$ or just the attributes as $\tt{.csv}$; for a total of $\sim$ 123 GB zipped for the former and 2.4 GB for the latter.
+\DIFadd{The core data  are available as $30 \times 2$ $\tt{.zip}$ files containing either all columns including the geometry as $\tt{.gpkg}$ or just the attributes }\DIFaddend as $\tt{.csv}$\DIFdelbegin \DIFdel{, each compressed into a $\tt{.zip}$ file and broken down into 220 files.
+The files }\DIFdelend \DIFaddbegin \DIFadd{; for a total of $\sim$ 123 GB zipped for the former and 2.4 GB for the latter.
+}
 
-\subsubsection*{Structure}
+\subsubsection*{\DIFadd{Structure}}
 
-The core data are split at the country level, resulting in 28 data chunks (plus two additional files from Italy and Czechia, which follow a different license for distribution) that can be concatenated into one single dataframe for all the EU. Each row of the attribute file contains the same six variables listed in Table~\ref{tab:variables}, six \textit{attributes} and one geometry column. The geometry file contains two columns, the geometry itself and the ID that enables one to match the geometry with attributes and other relevant information. 
+\DIFadd{The core data }\DIFaddend are split at the country \DIFdelbegin \DIFdel{or regional leveldepending on their size and }\DIFdelend \DIFaddbegin \DIFadd{level, resulting in 28 data chunks (plus two additional files from Italy and Czechia, which follow a different license for distribution) that }\DIFaddend can be concatenated into one single dataframe for all the EU. Each row \DIFaddbegin \DIFadd{of the attribute file }\DIFaddend contains the same \DIFdelbegin \DIFdel{seven }\DIFdelend \DIFaddbegin \DIFadd{six }\DIFaddend variables listed in Table~\ref{tab:variables}, six \textit{attributes} and one geometry column. The \DIFdelbegin \DIFdel{main files are in total $\sim$ 109 GB zipped and $\sim$ 330 GB unzipped}\DIFdelend \DIFaddbegin \DIFadd{geometry file contains two columns, the geometry itself and the ID that enables one to match the geometry with attributes and other relevant information}\DIFaddend . 
 
-To maximize usability, we further split the data into a file including both geometry and attributes, and one with attributes only. The goal of this split is to enable at the same time to: 1) read easily the tabular data in any relevant software (including non-geospatial software e.g. Excel) without having to load the geometry which represent most of the memory footprint, 2) read easily the geometry and the CRS information through standard functionalities of relevant GIS software and libraries. For the full file, we chose GeoPackage ($\tt{.gpkg}$) as it is an open, non-proprietary, platform-independent and standards-based format developed by Open Geospatial Consortium. Its memory usage, while not the best across all existing formats e.g. GeoParquet, is reasonable and it was important to choose a format supported natively by all relevant software, which is currently not the case of the most memory-efficient formats. For the attributes, we chose $\tt{.csv}$, a simple, versatile and universally supported tabular file format. 
+\DIFdelbegin \subsubsection*{\DIFdel{Structure}}
+%DIFAUXCMD
+\DIFdel{To ensure usability, in }\textsc{\DIFdel{eubucco}} %DIFAUXCMD
+\DIFdel{v0.1 we broke down the dataset into chunks of maximum 2 GB once zipped. When the archive file of the country was under this limit, we kept it at the country level. Otherwise, we split the country into regional files. A few large regions were still larger that 2 GB once compressed, }\DIFdelend \DIFaddbegin \DIFadd{To maximize usability, we further split the data into a file including both geometry and attributes, and one with attributes only. The goal of this split is to enable at the same time to: 1) read easily the tabular data in any relevant software (including non-geospatial software }\DIFaddend e.g. \DIFdelbegin \DIFdel{in Nordrhein-Westfalen, requiring further splitting. Depending on the split level, file names are ${\tt <database\_version>\-<GADM\_code\-<part>.<csv\ or\ zip>}$. For }\textsc{\DIFdel{eubucco}} %DIFAUXCMD
+\DIFdel{v0.1, due to limitations on the total number of files per upload on Zenodo, we zipped parts together by country. In future versions, we will provide different aggregation levels to accommodate different usages, and possibly different files }\DIFdelend \DIFaddbegin \DIFadd{Excel) without having to load the geometry which represent most of the memory footprint, 2) read easily the geometry and the CRS information through standard functionalities of relevant GIS software and libraries. For the full file, we chose GeoPackage ($\tt{.gpkg}$) as it is an open, non-proprietary, platform-independent and standards-based format developed by Open Geospatial Consortium. Its memory usage, while not the best across all existing }\DIFaddend formats e.g. \DIFdelbegin \DIFdel{Parquet or SQL for the larger dumps}\DIFdelend \DIFaddbegin \DIFadd{GeoParquet, is reasonable and it was important to choose a format supported natively by all relevant software, which is currently not the case of the most memory-efficient formats. For the attributes, we chose $\tt{.csv}$, a simple, versatile and universally supported tabular file format}\DIFaddend . 
 
 \subsubsection*{Variables}
 The first and second \textit{attribute} variables are IDs.  ${\tt id}$ is the unique building identifier based on the version number of the database (e.g. ${\tt  v0.1}$), the identifier of the GADM boundary (e.g. ${\tt TU.3.2\_1}$) and an ascending number for all buildings in the boundary, connected by a dash. 
 ${\tt id\_source}$ is the ID from the original source file.
- 
+
 The following four attribute variables contain information about building characteristics, including the building \textit{height} (${\tt height}$), \textit{construction year} ($\tt{age}$), \textit{type} following a residential / non-residential / unknown classification (${\tt type}$ ) and the type for the input dataset (${\tt type\_source}$). In \textsc{eubucco} v0.1, main attributes have a coverage for height, type and construction year of respectively 74\%, 45\% and 24\% of the buildings. For country-level values, refer to  Table~\ref{tab:country stats}  and for city-level counts, refer to ${\tt city-level-overview-tables-v0.1.zip}$ .  
 
 The last variable $\tt{geometry}$ contains the building \textit{footprint}. This is a geospatial vector geometry object, specifically a 2D polygon, represented as a series of point coordinates $(X,Y)$ in a referential system defined by a CRS, here ETRS89 ($\tt{EPSG:3035}$). 
+\DIFdelbegin \DIFdel{In order to write the files as $\tt{.csv}$, which does not support geospatial objects, the geometry was encoded as a WKT string. This string is human-readable and corresponds to the actual polygon in the format $\tt{POLYGON ((x_1 \ y_1, x_2 \ y_2,...))}$. 
+}\DIFdelend 
 
 \begin{table}[h!]
 \centering
 \renewcommand{\arraystretch}{1.4}
 \begin{tabular}{lll}
 \hline
-\textbf{Variables} & \textbf{\textbf{type}} & \textbf{Definition} \\
+\textbf{Variables} & \textbf{\DIFdelbeginFL \textit{\DIFdelFL{type}}%DIFAUXCMD
+\DIFdelendFL \DIFaddbeginFL \textbf{\DIFaddFL{type}}\DIFaddendFL } & \textbf{Definition} \\
 \hline
 ${\tt id}$ & string & Unique \textsc{eubucco} building identifier based on the version number of the database, 
 \\ & & the GADM city identifier and an ascending number for all buildings in the city \\
@@ -296,14 +445,17 @@ $\tt{age}$ & integer &  Initial \textit{construction end year} of the building (
 $\tt{type}$ & string & Usage \textit{type} of the building, based on our classification \\
 && $ \in \{\tt{residential},\tt{non-residential},\tt{unknown}\} $ \\
 
-${\tt type\_source}$ & string & Usage \textit{type} of the building, from the original dataset, possibly a human-readable type or a code; \\
-& & see ${\tt type\_matches-v0.1.zip}$ for human-readable matching translated in English if relevant \\
+${\tt type\_source}$ & string \DIFdelbeginFL \DIFdelFL{/ }\DIFdelendFL & Usage \textit{type} of the building, from the original dataset, possibly a human-readable type or a code; \\
+& \DIFdelbeginFL \DIFdelFL{float }\DIFdelendFL & see ${\tt type\_matches-v0.1.zip}$ for human-readable matching translated in English if relevant \\
 
 ${\tt geometry}$ & string & \textit{Footprint} of the building as a 2D \textit{(X,Y)} polygon object projected in ETRS89
 $(\tt{EPSG:3035})$ \\
-\hline
+\DIFdelbeginFL %DIFDELCMD < & & %%%
+\DIFdelFL{and encoded in a WKT string }%DIFDELCMD < \\
+%DIFDELCMD < %%%
+\DIFdelendFL \hline
 \end{tabular}
-\caption{\label{tab:variables}\textbf{Variables in \textsc{eubucco} v0.1}. Note that that in the attribute-only file the geometry column is ommitted.}
+\caption{\label{tab:variables}\textbf{Variables in \textsc{eubucco} v0.1}\DIFaddbeginFL \DIFaddFL{. Note that that in the attribute-only file the geometry column is ommitted.}\DIFaddendFL }
 \end{table}
 
 
@@ -314,9 +466,9 @@ We provide several additional files that may be used together with the main data
 \begin{enumerate}[topsep=1pt]
 
      \itemsep-0.05em 
-    
+
     \item \textbf{Metadata table on input datasets} (${\tt input-dataset-metatable-v0.1.xlsx}$): This table contains 38 dimensions that provide users with the main information about input datasets. Specifically, the file contains the input dataset's
-    
+
     \begin{itemize}[topsep=1pt]
         \itemsep-0.05em  
         \item name and area information (e.g. country, dataset specific area and dataset name)
@@ -328,9 +480,9 @@ We provide several additional files that may be used together with the main data
     \end{itemize}
 
     \item \textbf{Table on excluded datasets} (${\tt excluded-datasets-v0.1.xlsx}$): This table provides an overview of available government datasets that were not included in this study with a rational why, most often because they were only available at a high cost. For all these datasets we contacted the data owner to ask whether the data were available for free for research; the status of the dataset reflects their answer and a contact date is also indicated in the file.  
-    
+
     \item \textbf{Database content metrics at the city-level} (${\tt city-level-overview-tables-v0.1.zip}$): The overview files provide 48 city-level metrics for all $41,456$ cities, of which 627, mostly very small cities, do not contain any building. The files enable a detailed overview of the database content in term of \textit{geometries} and \textit{attributes} can be used to study patterns across regions and countries and can also be used to identify bugs or outliers. They are provided as a table for each country with the following naming: ${\tt <country>\_overview-v0.1.csv}$. Each table contains:
-    
+
     \begin{itemize}[topsep=1pt]
         \itemsep-0.05em  
         \item the city ID, name and region
@@ -341,11 +493,11 @@ We provide several additional files that may be used together with the main data
     \end{itemize}
 
     \item \textbf{Type matching tables} (${\tt type\_matches-v0.1.zip}$): Multiple tables are provided for each relevant dataset or group of datasets (if cadaster codes apply for several datasets in Germany and Italy) as ${\tt <dataset>-type\_matches-v0.1.csv}$. These tables enable to map the \textit{type} of the raw data (${\tt type\_source}$) to the \textit{type} column (${\tt type\_source}$) of the database and provide an English translation of the \textit{type} of the raw data.
-    
+
     \item \textbf{Administrative code matching table} (${\tt admin-codes-matches-v0.1.csv}$): this table enables to match the GADM code from building ids with its country, region, city and the input dataset per city. If files were split into parts during the upload process, the table informs which cities are summarised in which region part.
-    
+
     \item \textbf{Administrative city levels} (${\tt gadm-city-levels-v0.1.csv}$): this table provides an overview of the GADM level that was chosen to define the city level per country.
-    
+
 \end{enumerate}
 
 
@@ -398,9 +550,9 @@ The last axis of the technical validation was to monitor duplicates. This step i
 
 \medskip \noindent \textit{Issue 8: Duplicated building in raw data.} \hspace{0.1cm}
 In rare cases, there could be duplicated entries in the original datasets. We tested for this by checking duplicates on both ID and geometry after the initial parsing, and dropped duplicates when present. 
- 
+
 \medskip \noindent \textit{Issue 9: Duplication from file and data chunks manipulation.} \hspace{0.1cm}
-A number of datasets were provided as parts; in such occasions, there were risks that a part is read twice or, when the partitions were created, that some buildings at the end of the part and the beginning of another could be the same. Because some datasets were very large, we also read the data in chunks to keep the memory requirements low throughout the workflow, creating another risk of duplicates. In both cases, we tested for duplicates on both ID and geometry after the initial parsing, and dropped duplicates when present.
+A number of datasets were provided as parts; in such occasions, there were risks that a part is read twice or, when the partitions were created, that some buildings at the end of the part and the beginning of another could be the same. Because some datasets were very large, we also read \DIFdelbegin \DIFdel{and saved }\DIFdelend the data in chunks to keep the memory requirements low throughout the workflow, creating another risk of duplicates. In both cases, we tested for duplicates on both ID and geometry after the initial parsing, and dropped duplicates when present.
 
 \medskip \noindent \textit{Issue 10: Duplication from administrative boundary matching.} \hspace{0.1cm} Many duplicates could be created when matching buildings with their administrative boundary by spatial join, based on the intersection between the footprint and boundary polygons. Because administrative boundaries fully fill the area of a country, there are also always adjacent boundaries except for isolated areas like islands. With the join being used, any building that sits on the boundary between two cities would be allocated to both cities. The alternative to keep only buildings within a city was not desirable as all such buildings would be dropped. To ensure that buildings were only present in one city and not duplicated, we calculated the area of intersection for all buildings located on an administrative boundary and allocated them to one city based on the maximum area of intersection. 
 
@@ -420,30 +572,66 @@ Using the data likely involves loading buildings with a geospatial software, vis
 The availability of location information about city, region and country for each building enables to select data at different scales. The main goal of this work is to enable work at the scale of the European Union. Users aiming to perform any analysis at that scale can build a workflow to exploit all the data provided, likely by loading the data sequentially, given the volume. 
 Users may want to select a single city or region to conduct a local analysis. Finally, users could also choose to select a given subset of areas across different countries to perform comparative analyses.
 
-\medskip \noindent \textit{Downloading the data.} \hspace{0.1cm}
-The data are available on \url{eubucco.com/data}. Currently, one can download country-level files either by using the dropdown button, or our api \url{api.eubucco.com/v0.1/countries}. A few example cities of limited size are available for users who want to explore first a small fraction of the data. In the future, we will provide more refined download options, for example spatial queries.  
+\medskip \noindent \textit{\DIFdelbegin \DIFdel{Loading }\DIFdelend \DIFaddbegin \DIFadd{Downloading }\DIFaddend the data.} \DIFaddbegin \DIFadd{\hspace{0.1cm}
+The data are available on }\url{eubucco.com/data}\DIFadd{. Currently, one can download country-level files either by using the dropdown button, or our api }\url{api.eubucco.com/v0.1/countries}\DIFadd{. A few example cities of limited size are available for users who want to explore first a small fraction of the data. In the future, we will provide more refined download options, for example spatial queries.  
+}
 
-\medskip \noindent \textit{Reading the data.} \hspace{0.1cm}
-The data can be read by all main GIS software like PostGIS, QGIS or ArcGIS and by the geospatial libraries of the main programming language like Python or R. The full file can be loaded directly as a geospatial layer or a geodataframe. The attribute only-file can be loaded as an attribute table or a dataframe. 
+\medskip \noindent \textit{\DIFadd{Reading the data.}} \DIFaddend \hspace{0.1cm}
+The data can be read by all main GIS software like PostGIS, QGIS or ArcGIS and by the geospatial libraries of the main programming language like Python or R. \DIFdelbegin \DIFdel{As  }\textsc{\DIFdel{eubucco}} %DIFAUXCMD
+\DIFdel{v0.1 is provided in tabular format with geometries as WKT strings, these need to decoded first. With QGIS, one should select ${\tt Layer > Add\ Layer > Add\ Delimited\ Text\ Layer}$ and then choose WKT as geometry definition and ETRS89 as CRS}\DIFdelend \DIFaddbegin \DIFadd{The full file can be loaded directly as a geospatial layer or a geodataframe. The attribute only-file can be loaded as an attribute table or a dataframe}\DIFaddend . 
 
 \medskip \noindent \textit{Visualizing the data.} \hspace{0.1cm} 
 The data can be visualized through maps or by computing and plotting statistics of the \textit{attributes} or of derived metrics. A convenient way to visualize \textit{attributes} is to create choropleth maps, like on Fig.~\ref{fig:db_content}, that colors buildings with a color coding corresponding to attribute values. Building \textit{heights} can be extruded to visualize the dataset in 3D, e.g. using the open source framework Kepler \cite{kepler2021}. 
 
 \medskip \noindent \textit{Deriving metrics.} \hspace{0.1cm} 
-An interesting way to enhance the value of the data is to derive metrics that represent particular features of the buildings, individually or aggregated within a given distance or for a city. There are multiple off-the-shelf tools that enable computing various metrics easily. In Python, those include for example the libraries Momepy\cite{fleischmann2019momepy}, GeoPandas\cite{kelsey_jordahl_2020_3946761}, Shapely\cite{gillies_2021}, PySAL\cite{rey2010pysal}, and OSMnx\cite{boeing2017osmnx}. One can also find relevant open-source code developed in other studies\cite{2022_ceus_gbmi,milojevic2020learning}. Refer to the documentation of these libraries for example of metrics and workflows.
+An interesting way to enhance the value of the data is to derive metrics that represent particular features of the buildings, individually or aggregated within a given distance or for a city. There are multiple off-the-shelf tools that enable computing various metrics easily. In Python, those include for example the libraries Momepy\cite{fleischmann2019momepy}, GeoPandas\DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+\cite{kelsey_jordahl_2019_2585849}}\hspace{0pt}%DIFAUXCMD
+}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
+\cite{kelsey_jordahl_2020_3946761}}\hspace{0pt}%DIFAUXCMD
+}\DIFaddend , Shapely\cite{gillies_2021}, PySAL\cite{rey2010pysal}, and OSMnx\cite{boeing2017osmnx}. One can also find relevant open-source code developed in other studies\cite{2022_ceus_gbmi,milojevic2020learning}. Refer to the documentation of these libraries for example of metrics and workflows.
 
-\medskip \noindent \textit{Integrating EUBUCCO with other datasets.} \hspace{0.1cm} 
-The data can be integrated with various other datasets to conduct richer analyses and modelling. One can match \textsc{eubucco} with geospatial vector datasets e.g. street networks OpenStreetMap \cite{haklay2008openstreetmap} or land use information from Urban Atlas \cite{copernicus2018}, to provide a more comprehensive view of urban form. Buildings and streets can for example be analyzed together with tools like Momepy\cite{fleischmann2019momepy}. Geospatial raster data like climate \cite{de2015urbclim} or population density \cite{meta2017} can also be relevantly associated e.g. by summing building variable for a grid or using the grid cell value from the raster dataset as a new attribute for the buildings present in the cell. More aggregated statistics e.g. at the city level, such as greenhouse gas emissions or gross domestic product, can be matched if they can be linked with the boundary polygon of the given area. Then building statistics can for example be computed within the same area.   
+\DIFaddbegin \medskip \noindent \textit{\DIFadd{Integrating EUBUCCO with other datasets.}} \DIFadd{\hspace{0.1cm} 
+The data can be integrated with various other datasets to conduct richer analyses and modelling. One can match }\textsc{\DIFadd{eubucco}} \DIFadd{with geospatial vector datasets e.g. street networks OpenStreetMap \mbox{%DIFAUXCMD
+\cite{haklay2008openstreetmap} }\hspace{0pt}%DIFAUXCMD
+or land use information from Urban Atlas \mbox{%DIFAUXCMD
+\cite{copernicus2018}}\hspace{0pt}%DIFAUXCMD
+, to provide a more comprehensive view of urban form. Buildings and streets can for example be analyzed together with tools like Momepy\mbox{%DIFAUXCMD
+\cite{fleischmann2019momepy}}\hspace{0pt}%DIFAUXCMD
+. Geospatial raster data like climate \mbox{%DIFAUXCMD
+\cite{de2015urbclim} }\hspace{0pt}%DIFAUXCMD
+or population density \mbox{%DIFAUXCMD
+\cite{meta2017} }\hspace{0pt}%DIFAUXCMD
+can also be relevantly associated e.g. by summing building variable for a grid or using the grid cell value from the raster dataset as a new attribute for the buildings present in the cell. More aggregated statistics e.g. at the city level, such as greenhouse gas emissions or gross domestic product, can be matched if they can be linked with the boundary polygon of the given area. Then building statistics can for example be computed within the same area.   
+}
 
-\subsection*{Example use case: Energy modelling} 
+\DIFaddend \subsection*{Example use case: Energy modelling} 
 A concrete example that illustrates how \textsc{eubucco} v0.1 can be used is building energy demand simulations. Energy models require inputs about building characteristics to make predictions about buildings energy demand: statistical models use them as predictive features, engineering models as input parameters. Our data can be used to compute relevant metrics such as the total floor area and the area of each wall for buildings that have a height value. Our data can also be matched with other datasets to derive further metrics e.g. the solar radiation received by a given wall using gridded climate data or thermal parameters by using the construction year attribute and building typologies datasets. In sum, there is a wide variety of metrics that can be computed from our data for the specific use case of energy modelling, but also for many other such as urban morphology, environmental risk assessment, micro-climate modelling, etc. 
 Building stock data can be used also for material stocks and flow assessments. For instance, Heeren and Hellweg use 2.5D data of Switzerland to determine the amount of construction material in buildings. That allows to determine the current stocks of construction material and anticipate future material flows and opportunities for circular economy. \cite{heeren2019tracking}
 
-\subsection*{Example use case: Climate and disaster risk modelling} 
-Our database can also be used for climate and disaster risk modelling. Such models integrate the natural hazard, the exposure (e.g. buildings), and their respective vulnerability to the modelled hazard \cite{aznar2019climada}. Often global climate or disaster risk models use grid-based exposure data \cite{eberenz2020asset} and large scale (global or continental) vulnerability curves \cite{eberenz2020regional}. However, differentiating the exposure and vulnerability on every relevant object has multiple advantages, such as increased spatial accuracy and allowing for differentiated exposure value and vulnerability based on the objects characteristics \cite{van2021flood}. Our database allows to model buildings as individual objects on a continental scale. Building characteristics such as footprint area, country or number of floors, can be used to differentiate the value and the vulnerability per object, and hence, improving current high-resolution risk modelling approaches \cite{stalhandske2022projected}. Finally, urban overheating negatively impacts health and well-being \cite{nazarian2022integrated}. Better understanding the relationship between indoor and outdoor temperature on a large scale is crucial to understand indoor-heat risk on a building and floor level and provide decision-makers with quantitative assessments of those risks. Building characteristics such as thermal capacity \cite{buchin2016role}, the height and orientation are important characteristics to model indoor heat-risk. While certain aspects such as thermal capacity are not directly part of our database they might be inferred using, for instance, from the building age. Also, variables such as height and orientation can directly be used to model high-resolution outdoor temperature variation of mean radiant temperature \cite{lindberg2008solweig} or ambient temperature \cite{zumwald2021mapping}.  
+\DIFaddbegin \subsection*{\DIFadd{Example use case: Climate and disaster risk modelling}} 
+\DIFadd{Our database can also be used for climate and disaster risk modelling. Such models integrate the natural hazard, the exposure (e.g. buildings), and their respective vulnerability to the modelled hazard \mbox{%DIFAUXCMD
+\cite{aznar2019climada}}\hspace{0pt}%DIFAUXCMD
+. Often global climate or disaster risk models use grid-based exposure data \mbox{%DIFAUXCMD
+\cite{eberenz2020asset} }\hspace{0pt}%DIFAUXCMD
+and large scale (global or continental) vulnerability curves \mbox{%DIFAUXCMD
+\cite{eberenz2020regional}}\hspace{0pt}%DIFAUXCMD
+. However, differentiating the exposure and vulnerability on every relevant object has multiple advantages, such as increased spatial accuracy and allowing for differentiated exposure value and vulnerability based on the objects characteristics \mbox{%DIFAUXCMD
+\cite{van2021flood}}\hspace{0pt}%DIFAUXCMD
+. Our database allows to model buildings as individual objects on a continental scale. Building characteristics such as footprint area, country or number of floors, can be used to differentiate the value and the vulnerability per object, and hence, improving current high-resolution risk modelling approaches \mbox{%DIFAUXCMD
+\cite{stalhandske2022projected}}\hspace{0pt}%DIFAUXCMD
+. Finally, urban overheating negatively impacts health and well-being \mbox{%DIFAUXCMD
+\cite{nazarian2022integrated}}\hspace{0pt}%DIFAUXCMD
+. Better understanding the relationship between indoor and outdoor temperature on a large scale is crucial to understand indoor-heat risk on a building and floor level and provide decision-makers with quantitative assessments of those risks. Building characteristics such as thermal capacity \mbox{%DIFAUXCMD
+\cite{buchin2016role}}\hspace{0pt}%DIFAUXCMD
+, the height and orientation are important characteristics to model indoor heat-risk. While certain aspects such as thermal capacity are not directly part of our database they might be inferred using, for instance, from the building age. Also, variables such as height and orientation can directly be used to model high-resolution outdoor temperature variation of mean radiant temperature \mbox{%DIFAUXCMD
+\cite{lindberg2008solweig} }\hspace{0pt}%DIFAUXCMD
+or ambient temperature \mbox{%DIFAUXCMD
+\cite{zumwald2021mapping}}\hspace{0pt}%DIFAUXCMD
+.  
+}
 
 
-\subsection*{Filtering options}
+\DIFaddend \subsection*{Filtering options}
 Users may want to work with a subset of the data based on geography or satisfying certain conditions of homogeneity that are not met across the whole database. Specifically, users may choose to filter for:
 \begin{enumerate}[topsep=0.2pt]
     \itemsep-0.15em 
@@ -479,7 +667,7 @@ We welcome feedback or suggestions about the datasets present or possibly missin
 
 \section*{Code availability}
 
-All the code used in this study is available on Github as a release: \url{https://github.com/ai4up/eubucco/releases/tag/v0.1} \cite{eubucco-0.1-code2022}. It is free to re-use and modify with attribution under the ${\tt MIT\ license}$.
+All the code used in this study is available on Github \DIFaddbegin \DIFadd{as a release}\DIFaddend : \url{https://github.com/ai4up/eubucco/releases/tag/v0.1} \cite{eubucco-0.1-code2022}. It is free to re-use and modify with attribution under the ${\tt MIT\ license}$.
 
 
 \bibliography{references.bib}
@@ -496,7 +684,8 @@ We thank Olaf Wysoki, Peter Berrill and Aicha Zekar for useful discussions. We a
 
 \noindent \textbf{Methodology:} NMD, FW, NH 	
 
-\noindent \textbf{Software:} NMD, FW, FN, GB	
+\noindent \textbf{Software:} NMD, FW, FN\DIFaddbegin \DIFadd{, GB	
+}\DIFaddend 
 
 \noindent \textbf{Validation:} NMD, FW, JH, FN	
 
